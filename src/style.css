@@ -65,31 +65,43 @@ h1 {
   text-align: center;
 }
 
-#block-settings,
-#teaser-settings {
+.settings {
   padding-left: 20px;
   grid-column: 1/2;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 label.settings-input {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 10px;
   align-items: center;
-}
-#block-settings{
-  grid-row: 1/2;
-}
-#teaser-settings{
-  grid-row: 2/3;
+
+    .form-control {
+        height: 26px;
+        padding: 0 1rem;
+    }
+
+    input[type=checkbox].toggle {
+        height: 25px;
+        width: 45px;
+
+        &:before {
+            height: 23px;
+            width: 23px;
+        }
+    }
 }
 .preview {
   grid-column: 2/-1;
-  grid-row: 1/-1;
-  background: #646cff;
+    background-color: #747bff;
+    /*background: url("./assets/checkerboard.jpg");*/
+    /*background-size: 5%;*/
   padding: 40px;
+    position: sticky;
+    top: 0;
 }
 
 @media (prefers-color-scheme: light) {

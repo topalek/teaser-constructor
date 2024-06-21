@@ -4,19 +4,19 @@
       <a href="{url}" v-for="n in teaserCount" :key="n" :style="teaserStyle" class="enigmas__enigma">
         <div class="enigma__picture">
           <img
-            :src="`https://picsum.photos/id/${n}/500/500`"
-            :style="imageStyle"
-
-        />
+              :src="`https://picsum.photos/id/${n}/500/500`"
+              :style="imageStyle"
+          />
+        </div>
+        <div class="enigma__footer">
+          <p :style="textStyle" class="enigma__text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem molestiae cum minus.
+          </p>
+          <div v-if="teaserSettings.showBtn" :style="btnStyle" class="enigma__btn">
+            {{ teaserSettings.btn.text }}
+          </div>
         </div>
 
-        <p :style="textStyle" class="enigma__text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-          molestiae cum minus.
-        </p>
-        <div v-if="teaserSettings.showIcon" :style="iconStyle" class="ad-icon">
-          <i class="fas fa-arrow-right"></i>
-        </div>
       </a>
     </div>
   </div>
@@ -32,6 +32,17 @@ export default {
     teaserCount() {
       return this.blockSettings.adsVertical * this.blockSettings.adsHorizontal;
     },
+    btnStyle() {
+      return {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '40px',
+        ...this.teaserSettings.btn,
+        borderRadius: `${this.teaserSettings.btn.borderRadius}px`,
+        fontWeight: this.teaserSettings.btn.bold ? 'bold' : 'normal',
+      }
+    },
     listStyle() {
       return {
         display: "grid!important",
@@ -42,12 +53,12 @@ export default {
       }
     },
     blockStyle() {
-      return {
-        width: `${this.blockSettings.width}px!important`,
-        height: `${this.blockSettings.height}px!important`,
+      let style = {
         borderRadius: `${this.blockSettings.borderRadius}px!important`,
-        ...(this.blockSettings.responsive && { width: "100%" }),
-      };
+        ...(this.blockSettings.responsive ? {width: "100%", display: "flex!important", flexWrap: "wrap!important", height: 'auto!important'} : {width: `${this.blockSettings.width}px!important`, height: `${this.blockSettings.height}px!important`})
+      }
+      console.log(style)
+      return style
     },
     teaserStyle() {
       return {
@@ -62,7 +73,7 @@ export default {
         overflow: "hidden",
         ...(this.teaserSettings.zoomOnHover && {
           transition: "transform 0.3s",
-          ":hover": { transform: "scale(1.05)" },
+          ":hover": {transform: "scale(1.05)"},
         }),
       };
     },
@@ -70,16 +81,16 @@ export default {
       return {
         width: `${this.teaserSettings.imageSize}px`,
         aspectRatio: this.teaserSettings.aspectRatio,
-        borderRadius: `${this.teaserSettings.borderRadius}px`,
+        // borderRadius: `${this.teaserSettings.borderRadius}px`,
       };
     },
     textStyle() {
       return {
-        fontFamily: this.teaserSettings.text.fontFamily+'!important',
-        lineHeight: this.teaserSettings.text.lineHeight+'!important',
+        fontFamily: this.teaserSettings.text.fontFamily + '!important',
+        lineHeight: this.teaserSettings.text.lineHeight + '!important',
         fontSize: `${this.teaserSettings.text.fontSize}px!important`,
-        color: this.teaserSettings.text.color+'!important',
-        textAlign: this.teaserSettings.text.textAlign+'!important',
+        color: this.teaserSettings.text.color + '!important',
+        textAlign: this.teaserSettings.text.textAlign + '!important',
         fontWeight: this.teaserSettings.text.fontStyle === "bold" ? "bold" : "normal",
         fontStyle: this.teaserSettings.text.fontStyle === "italic" ? "italic" : "normal",
         paddingInline: `${this.teaserSettings.text.paddingInline}px!important`,
@@ -93,7 +104,7 @@ export default {
         color: this.teaserSettings.iconColor,
         transition: "color 0.3s",
         ...(this.teaserSettings.hoverIconColor && {
-          ":hover": { color: this.teaserSettings.hoverIconColor },
+          ":hover": {color: this.teaserSettings.hoverIconColor},
         }),
       };
     },

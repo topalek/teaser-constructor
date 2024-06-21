@@ -1,12 +1,11 @@
 <template>
-  <div id="teaser-settings">
-    <h2>Настройки Тизера</h2>
-    <Input v-model="settings.width" type="number" min="20" max="3000">Ширина тизера</Input>
-    <Input v-model="settings.height" type="number" min="20" max="3000">Высота тизера</Input>
-    <Input v-model="settings.borderRadius" type="number" min="0" max="100">Скругление</Input>
+  <div class="teaser-settings">
+    <SettingsInput v-model="settings.width" max="3000" min="20" type="number">Ширина тизера</SettingsInput>
+    <SettingsInput v-model="settings.height" max="3000" min="20" type="number">Высота тизера</SettingsInput>
+    <SettingsInput v-model="settings.borderRadius" max="100" min="0" type="number">Скругление</SettingsInput>
     <label class="settings-text">
       <span>Текст снизу</span>
-      <input class="toggle"  v-model="settings.textBottom" type="checkbox"/>
+      <input v-model="settings.textBottom" class="toggle" type="checkbox"/>
       <span>Текст справа</span>
     </label>
 
@@ -14,26 +13,31 @@
     <Select v-model="settings.text.fontStyle" :options="['normal','bold','italic']">Стиль теста</Select>
     <Select v-model="settings.text.fontFamily" :options="fonts">Шрифт</Select>
     <Select v-model="settings.text.textAlign" :options="textAlign">Выравнивание текста</Select>
-    <Input v-model="settings.text.fontSize" type="number" min="8" max="22">Размер шрифта</Input>
-    <Input v-model="settings.text.lineHeight" type="number" min="0.8" :step="0.1">Ширина линии</Input>
-    <Input v-model="settings.text.paddingInline" type="number" min="0" max="200">Отступы Inline</Input>
-    <Input v-model="settings.text.paddingBlock" type="number" min="0" max="200">Отступы Block</Input>
-    <label class="settings-input">
-      <span>Цвет текста</span>
-      <input class="color" v-model="settings.text.color" type="color"/>
-    </label>
-    <hr>
+    <SettingsInput v-model="settings.text.fontSize" max="22" min="8" type="number">Размер шрифта</SettingsInput>
+    <SettingsInput v-model="settings.text.lineHeight" :step="0.1" min="0.8" type="number">Ширина линии</SettingsInput>
+    <SettingsInput v-model="settings.text.paddingInline" max="200" min="0" type="number">Отступы Inline</SettingsInput>
+    <SettingsInput v-model="settings.text.paddingBlock" max="200" min="0" type="number">Отступы Block</SettingsInput>
+    <ColorInput v-model="settings.text.color">Цвет текста</ColorInput>
+    <Toggle v-model="settings.showBtn">Показать кнопку</Toggle>
+    <template v-if="settings.showBtn">
+      <Select v-model="settings.btn.text" :options="btnText">Текст кнопки</Select>
+      <ColorInput v-model="settings.btn.color">Цвет текста кнопки</ColorInput>
+      <ColorInput v-model="settings.btn.backgroundColor">Цвет фона кнопки</ColorInput>
+      <SettingsInput v-model="settings.btn.borderRadius" max="100" min="0" type="number">Скругление кнопки</SettingsInput>
+      <Toggle v-model="settings.btn.bold">Текст жирный</Toggle>
+    </template>
   </div>
 </template>
 
 <script>
-import Input from "./parts/Input.vue";
 import Select from "./parts/Select.vue";
 import ColorPicker from "./parts/ColorPicker.vue";
 import Toggle from "./parts/Toggle.vue";
+import ColorInput from "./parts/ColorInput.vue";
+import SettingsInput from "./parts/SettingsInput.vue";
 
 export default {
-  components: {Toggle, ColorPicker, Select, Input},
+  components: {SettingsInput, ColorInput, Toggle, ColorPicker, Select},
   data() {
     return {
       fonts: [
@@ -46,6 +50,7 @@ export default {
         "system-ui",
       ],
       textAlign: ["left", "center", "right"],
+      btnText: ["Узнать больше", "Подробнее", "Далее"],
       settings: {
         text: {
           fontStyle: "normal",
@@ -62,6 +67,15 @@ export default {
         width: 300,
         height: 200,
         borderRadius: 0,
+        showBtn: false,
+        btn: {
+          text: 'Узнать больше',
+          bold: false,
+          color: "#ffffff",
+          backgroundColor: "#165da8",
+          borderRadius: 0,
+
+        }
       },
     };
   },
@@ -79,7 +93,7 @@ export default {
 };
 </script>
 <style scoped>
-.settings-text{
+.settings-text {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;

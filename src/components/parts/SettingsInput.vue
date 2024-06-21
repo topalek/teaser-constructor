@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Input",
+  name: "SettingsInput",
   props: {
     modelValue: String,
     type: {

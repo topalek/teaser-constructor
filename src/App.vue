@@ -1,10 +1,18 @@
 <template>
-    <BlockSettings @update-settings="updateBlockSettings" :teaserSettings="teaserSettings"/>
-    <TeaserSettings @update-settings="updateTeaserSettings" :blockSettings="blockSettings"/>
-    <div class="preview">
-      <BlockPreview :blockSettings="blockSettings" :teaserSettings="teaserSettings" />
+  <div class="settings">
+    <h2>Настройки</h2>
+    <div aria-label="First group" class="btn-group me-2 mb-4" role="group">
+      <label :class="{'active': active === 'block'}" class="btn btn-outline-secondary" for="block">Блок</label>
+      <input id="block" v-model="active" autocomplete="off" class="btn-check" type="radio" value="block">
+      <input id="teaser" v-model="active" autocomplete="off" class="btn-check" type="radio" value="teaser">
+      <label :class="{'active': active === 'teaser'}" class="btn btn-outline-secondary" for="teaser">Тизер</label>
     </div>
-
+    <BlockSettings v-show="active === 'block'" :teaserSettings="teaserSettings" @update-settings="updateBlockSettings"/>
+    <TeaserSettings v-show="active === 'teaser'" :blockSettings="blockSettings" @update-settings="updateTeaserSettings"/>
+  </div>
+    <div class="preview">
+      <BlockPreview v-if="showPreview" :blockSettings="blockSettings" :teaserSettings="teaserSettings"/>
+    </div>
 </template>
 
 <script>
@@ -20,7 +28,8 @@ export default {
   },
   data() {
     return {
-      text:555,
+      active: 'block',
+      showPreview: false,
       blockSettings: {},
       teaserSettings: {},
     };
@@ -33,8 +42,21 @@ export default {
       this.teaserSettings = settings;
     },
   },
-  mounted() {
-    console.log(this.data)
+  watch: {
+    blockSettings: {
+      handler(newVal, oldVal) {
+        if (Object.keys(this.teaserSettings).length > 0) {
+          this.showPreview = true;
+        }
+      },
+      deep: true,
+    }
   }
 };
 </script>
+
+<style scoped>
+.btn-group input[type="radio"] {
+  display: none;
+}
+</style>
