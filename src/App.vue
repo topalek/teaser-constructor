@@ -7,11 +7,11 @@
       <input id="teaser" v-model="active" autocomplete="off" class="btn-check" type="radio" value="teaser">
       <label :class="{'active': active === 'teaser'}" class="btn btn-outline-secondary" for="teaser">Тизер</label>
     </div>
-    <BlockSettings v-show="active === 'block'" :teaserSettings="teaserSettings" @update-settings="updateBlockSettings"/>
-    <TeaserSettings v-show="active === 'teaser'" :blockSettings="blockSettings" @update-settings="updateTeaserSettings"/>
+    <BlockSettings v-show="active === 'block'"/>
+    <TeaserSettings v-show="active === 'teaser'"/>
   </div>
     <div class="preview">
-      <BlockPreview v-if="showPreview" :blockSettings="blockSettings" :teaserSettings="teaserSettings"/>
+      <BlockPreview v-if="showPreview" :block="$store.state.block" :teaser="$store.state.teaser"/>
     </div>
 </template>
 
@@ -30,27 +30,10 @@ export default {
     return {
       active: 'block',
       showPreview: false,
-      blockSettings: {},
-      teaserSettings: {},
     };
   },
-  methods: {
-    updateBlockSettings(settings) {
-      this.blockSettings = settings;
-    },
-    updateTeaserSettings(settings) {
-      this.teaserSettings = settings;
-    },
-  },
-  watch: {
-    blockSettings: {
-      handler(newVal, oldVal) {
-        if (Object.keys(this.teaserSettings).length > 0) {
-          this.showPreview = true;
-        }
-      },
-      deep: true,
-    }
+  mounted() {
+    this.showPreview = true
   }
 };
 </script>

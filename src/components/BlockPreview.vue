@@ -1,4 +1,5 @@
 <template>
+  <h3 v-if="$store.state.block.name">{{ $store.state.block.name }}</h3>
   <div :style="blockStyle" class="enigmas">
     <div class="enigmas__list" :style='listStyle'>
       <a href="{url}" v-for="n in teaserCount" :key="n" :style="teaserStyle" class="enigmas__enigma">
@@ -12,8 +13,8 @@
           <p :style="textStyle" class="enigma__text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem molestiae cum minus.
           </p>
-          <div v-if="teaserSettings.showBtn" :style="btnStyle" class="enigma__btn">
-            {{ teaserSettings.btn.text }}
+          <div v-if="teaser.showBtn" :style="btnStyle" class="enigma__btn">
+            {{ teaser.btn.text }}
           </div>
         </div>
 
@@ -25,12 +26,12 @@
 <script>
 export default {
   props: {
-    blockSettings: Object,
-    teaserSettings: Object,
+    block: Object,
+    teaser: Object,
   },
   computed: {
     teaserCount() {
-      return this.blockSettings.adsVertical * this.blockSettings.adsHorizontal;
+      return this.block.adsVertical * this.block.adsHorizontal;
     },
     btnStyle() {
       return {
@@ -38,40 +39,40 @@ export default {
         justifyContent: 'center',
         alignItems: 'center',
         height: '40px',
-        ...this.teaserSettings.btn,
-        borderRadius: `${this.teaserSettings.btn.borderRadius}px`,
-        fontWeight: this.teaserSettings.btn.bold ? 'bold' : 'normal',
+        ...this.teaser.btn,
+        borderRadius: `${this.teaser.btn.borderRadius}px`,
+        fontWeight: this.teaser.btn.bold ? 'bold' : 'normal',
       }
     },
     listStyle() {
       return {
         display: "grid!important",
-        gridTemplateColumns: `repeat(${this.blockSettings.adsHorizontal}, 1fr)!important`,
-        gap: `${this.blockSettings.spacing}px!important`,
-        backgroundColor: `${this.blockSettings.backgroundColor} !important`,
-        padding: `${this.blockSettings.padding}px!important`,
+        gridTemplateColumns: `repeat(${this.block.adsHorizontal}, 1fr)!important`,
+        gap: `${this.block.spacing}px!important`,
+        backgroundColor: `${this.block.backgroundColor} !important`,
+        padding: `${this.block.padding}px!important`,
       }
     },
     blockStyle() {
       let style = {
-        borderRadius: `${this.blockSettings.borderRadius}px!important`,
-        ...(this.blockSettings.responsive ? {width: "100%", display: "flex!important", flexWrap: "wrap!important", height: 'auto!important'} : {width: `${this.blockSettings.width}px!important`, height: `${this.blockSettings.height}px!important`})
+        borderRadius: `${this.block.borderRadius}px!important`,
+        ...(this.block.responsive ? {width: "100%", display: "flex!important", flexWrap: "wrap!important", height: 'auto!important'} : {width: `${this.block.width}px!important`, height: `${this.block.height}px!important`})
       }
       console.log(style)
       return style
     },
     teaserStyle() {
       return {
-        padding: `${this.teaserSettings.verticalPadding}px ${this.teaserSettings.horizontalPadding}px!important`,
+        padding: `${this.teaser.verticalPadding}px ${this.teaser.horizontalPadding}px!important`,
         display: 'grid!important',
-        gridTemplateColumns: this.teaserSettings.textBottom ? '1fr 1fr' : '1fr',
-        gridTemplateRows: this.teaserSettings.textBottom ? '1fr' : '1fr 1fr',
-        width: `${this.teaserSettings.width}px!important`,
-        height: `${this.teaserSettings.height}px!important`,
-        flexDirection: this.teaserSettings.textBottom ? 'column!important' : 'row!important',
-        borderRadius: `${this.teaserSettings.borderRadius}px`,
+        gridTemplateColumns: this.teaser.textBottom ? '1fr 1fr' : '1fr',
+        gridTemplateRows: this.teaser.textBottom ? '1fr' : '1fr 1fr',
+        width: `${this.teaser.width}px!important`,
+        height: `${this.teaser.height}px!important`,
+        flexDirection: this.teaser.textBottom ? 'column!important' : 'row!important',
+        borderRadius: `${this.teaser.borderRadius}px`,
         overflow: "hidden",
-        ...(this.teaserSettings.zoomOnHover && {
+        ...(this.teaser.zoomOnHover && {
           transition: "transform 0.3s",
           ":hover": {transform: "scale(1.05)"},
         }),
@@ -79,32 +80,32 @@ export default {
     },
     imageStyle() {
       return {
-        width: `${this.teaserSettings.imageSize}px`,
-        aspectRatio: this.teaserSettings.aspectRatio,
-        // borderRadius: `${this.teaserSettings.borderRadius}px`,
+        width: `${this.teaser.imageSize}px`,
+        aspectRatio: this.teaser.aspectRatio,
+        // borderRadius: `${this.teaser.borderRadius}px`,
       };
     },
     textStyle() {
       return {
-        fontFamily: this.teaserSettings.text.fontFamily + '!important',
-        lineHeight: this.teaserSettings.text.lineHeight + '!important',
-        fontSize: `${this.teaserSettings.text.fontSize}px!important`,
-        color: this.teaserSettings.text.color + '!important',
-        textAlign: this.teaserSettings.text.textAlign + '!important',
-        fontWeight: this.teaserSettings.text.fontStyle === "bold" ? "bold" : "normal",
-        fontStyle: this.teaserSettings.text.fontStyle === "italic" ? "italic" : "normal",
-        paddingInline: `${this.teaserSettings.text.paddingInline}px!important`,
-        paddingBlock: `${this.teaserSettings.text.paddingBlock}px!important`,
+        fontFamily: this.teaser.text.fontFamily + '!important',
+        lineHeight: this.teaser.text.lineHeight + '!important',
+        fontSize: `${this.teaser.text.fontSize}px!important`,
+        color: this.teaser.text.color + '!important',
+        textAlign: this.teaser.text.textAlign + '!important',
+        fontWeight: this.teaser.text.fontStyle === "bold" ? "bold" : "normal",
+        fontStyle: this.teaser.text.fontStyle === "italic" ? "italic" : "normal",
+        paddingInline: `${this.teaser.text.paddingInline}px!important`,
+        paddingBlock: `${this.teaser.text.paddingBlock}px!important`,
         transition: "color 0.3s",
       };
     },
     iconStyle() {
       return {
-        fontSize: `${this.teaserSettings.iconSize}px`,
-        color: this.teaserSettings.iconColor,
+        fontSize: `${this.teaser.iconSize}px`,
+        color: this.teaser.iconColor,
         transition: "color 0.3s",
-        ...(this.teaserSettings.hoverIconColor && {
-          ":hover": {color: this.teaserSettings.hoverIconColor},
+        ...(this.teaser.hoverIconColor && {
+          ":hover": {color: this.teaser.hoverIconColor},
         }),
       };
     },
@@ -113,5 +114,7 @@ export default {
 </script>
 
 <style scoped>
-
+h3 {
+  color: #fff;
+}
 </style>
