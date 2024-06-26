@@ -1,20 +1,282 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <title>Vite + Vue</title>
-    <script type="module" crossorigin src="/assets/index-CYa1tjVl.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BV9Jzrqt.css">
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="http://localhost:3000/images/favicon.ico" rel='icon' type='image/x-icon'>
+    <link href='https://fonts.googleapis.com' rel='preconnect'/>
+    <link crossorigin href='https://fonts.gstatic.com' rel='preconnect'/>
+    <link href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap'
+          rel='stylesheet'/>
+    <title>Teaser blocks</title>
+    <meta content="_csrf" name="csrf-param">
+    <meta content="vQgV8UANDWIHaMdBJhZenu6YfOTnM_T9_vFdpYMFthfsZnaaKEp7Fl0NnydHWhHkhugykNZjhoyIsxnp20bwXA==" name="csrf-token">
+    <link href="https://auction-web.beta.dev.lookmyteaser.name/css/teaser-block.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" rel="stylesheet">
+    <!--    <link href="https://lk.beta.dev.lookmyteaser.name/css/icons.css" rel="stylesheet">-->
+    <link href="https://lk.beta.dev.lookmyteaser.name/css/site.css" rel="stylesheet">
+
+    <script crossorigin src="/assets/index-DRT7Upn2.js" type="module"></script>
+    <link crossorigin href="/assets/index-Bud1W_vb.css" rel="stylesheet">
+</head>
+<body class="body">
+
+<header class="header">
+    <div class="top-bar">
+        <div class="left">
+            <button class="menu-toggle" onclick="toggleMenu(this)" type="button"><span></span></button>
+            <a class="logo" href="/">
+                <img alt="logo" class="logo-img" src="http://localhost:3000/images/logos/en/logo-slogan.svg"> </a>
+            <div class="manager-widget">
+                <div class="manager-photo avatar">
+                    <img alt="" class="avatar-img" src="http://localhost:3000/images/support-ava.png"></div>
+                <div class="widget-text">
+                    <div class="manager-title">
+                        Ваш менеджер
+                    </div>
+                    <div class="manager-name">
+                        <div class="manager-name_text">
+                            Support Banana
+                        </div>
+                        <span class="icon  icon-chevron-down-main"></span></div>
+                </div>
+                <div class="widget-info">
+                    <div class="widget-header">
+                        <div class="left">
+                            <div class="manager-avatar avatar">
+                                <img alt="" class="avatar-img" src="http://localhost:3000/images/support-ava.png"></div>
+                            <div class="online-marker online">
+                                <span class="icon  icon-dot"></span>
+                                <div class="online-marker-text">online</div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <h3 class="manager-name">Support Banana</h3>
+                            <div class="manager-about">За плечами 5 лет опыта работы с тизерными сетями и партнерскими программами</div>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-body-title">Напиши мне</div>
+                        <div class="schedule">
+                            <div class="schedule-icon">
+                                <span class="icon  ib-time-circle"><span class="path1"></span><span class="path2"></span></span></div>
+                            <ul class="schedule-list">
+                                <li class="schedule-item"> Пн-Вс с 10:00 до 19:00 (МСК)</li>
+                            </ul>
+                        </div>
+                        <ul class="contacts-list">
+                            <li class="contacts-list-item">
+                                <span class="icon  icon-telegram"></span> <a class="contacts-link" href="https://t.me/bananaadssupport" target="_blank">@bananaadssupport</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="notifications">
+                <button class="btn notification-trigger" data-toggle="#notifications">
+                    <span class="icon  icon-bell"><span class="path1"></span><span class="path2"></span></span></button>
+                <div id="notifications" class="dropdown notification-widget">
+                    <div class="widget-header">
+                        <div class="widget-title">Уведомления</div>
+                        <div class="widget-actions">
+                            <button class="btn" data-toggle="#notifications-actions" type="button"><span class="icon  icon-more"></span></button>
+                            <div id="notifications-actions" class="dropdown">
+                                <a class="action-btn" href="#"><span class="icon  icon-check"></span><span>Отметить как прочитанные</span></a> <a class="action-btn" href="#"><span
+                                    class="icon  icon-trash-main"></span><span>Удалить все уведомления</span></a></div>
+                        </div>
+                    </div>
+                    <div class="widget-body empty">
+                        <div class="empty-title">У вас нет сообщений</div>
+                    </div>
+                </div>
+            </div>
+            <div class="user">
+                <a class="user-avatar" href="/profile">
+                    <img alt="" class="avatar" src="https://ui-avatars.com/api/?background=FFFD58&color=181818&rounded=true&format=svg&bold=true&size=40&name=admin">
+                </a>
+                <div class="wallet" data-toggle="#wallet">
+                    <span class="icon  icon-wallet"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+                    <div class="money">
+                            <span class="amount" data-value="0">
+                                0                            </span>
+                        <span class="currency">₽</span>
+                    </div>
+                    <span class="icon  icon-chevron-down"></span></div>
+                <div id="wallet" class="dropdown wallet-widget">
+                    <div class="widget-header">
+                        admin
+                    </div>
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            Баланс: <span class="amount" data-value="0">
+                                    0                                </span>
+                            <span class="currency">₽</span>
+                        </div>
+                        <div class="widget-actions">
+                            <button class="btn" data-toggleShow type="button"><span class="icon  ib-hide"><span class="path1"></span><span class="path2"></span></span></button>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <ul class="user-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile"><span class="icon  icon-setting"><span class="path1"></span><span class="path2"></span></span><span>Настройки профиля</span></a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-method="post" href="/logout"><span class="icon  icon-logout"><span class="path1"></span><span class="path2"></span></span><span>Выйти</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-menu">
+                <button class="btn reset menu-btn" type="button">Menu</button>
+                <ul class="admin-menu-list">
+                    <li class="admin-menu-item"><span>Admin</span>
+                        <ul class='submenu'>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/page">Статические страницы</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/teaser">Модерация тизеров</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/site/moderation">Модерация площадок</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/reject-reason">Причины отклонения</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/log-model">Лог изменений</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/info">Teaser Info</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/device-type/index">Типы устройств</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/limit/index">Лимиты</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/country">Страны</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/country-cpc">Ставки стран</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/country-category-cpc">Ставки страна-категория</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/user-commission">Индивидуальные комиссии</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/browser">Браузеры</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/user">Users</a></li>
+                            <li class="admin-menu-item"><span>Тематики</span>
+                                <ul class='submenu'>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/site-category">Тематики площадок</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/site-category/vitrina">Тематики витрины</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/teaser-category">Тематики тизеров</a></li>
+                                </ul>
+                            </li>
+                            <li class="admin-menu-item"><span>Шаблоны</span>
+                                <ul class='submenu'>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/site-block">Блоки</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/site-block-template">Шаблоны блоков</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/teaser-template">Шаблоны тизеров</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/common-template">Общие шаблоны</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/template-cpa">PostBack шаблоны</a></li>
+                                </ul>
+                            </li>
+                            <li class="admin-menu-item"><span>Переводы</span>
+                                <ul class='submenu'>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/translatemanager/language/list">Языки</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/translatemanager/language/create">Добавить язык</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/translatemanager/language/scan">Обновить переводы</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/translatemanager/language/optimizer">Оптимизировать переводы</a></li>
+                                </ul>
+                            </li>
+                            <li class="admin-menu-item"><span>RBAC</span>
+                                <ul class='submenu'>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/rbac/route">Маршруты</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/rbac/permission">Разрешения</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/rbac/role">Роли</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/rbac/assignment">Назначения</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/rbac/rule">Правила</a></li>
+                                </ul>
+                            </li>
+                            <li class="admin-menu-item"><span>Баланс</span>
+                                <ul class='submenu'>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/balance">Баланс</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/balance/dict">Словарь</a></li>
+                                    <li class="admin-menu-item"><a href="http://localhost:3000/adm/balance-history">История баланса</a></li>
+                                </ul>
+                            </li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/telegram-bot">Телеграм боты</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/sender-config">Конфигурация отправок</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/adm/sender-message">Отправленные сообщения</a></li>
+                        </ul>
+                    </li>
+                    <li class="admin-menu-item"><span>Рекламодатель</span>
+                        <ul class='submenu'>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/lk/adv-campaign/index">Рекламные кампании</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/lk/teaser/index">Тизеры</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/lk/statistics">Статистика CH</a></li>
+                        </ul>
+                    </li>
+                    <li class="admin-menu-item"><span>WebMaster</span>
+                        <ul class='submenu'>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/webmaster/site/index">Площадки</a></li>
+                            <li class="admin-menu-item"><a href="http://localhost:3000/webmaster/statistics/index">Статистика</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nav class="header-menu">
+        <ul class="nav nav-tabs" data-accordion="false" data-widget="treeview" role="menu">
+            <li class="nav-item"><a class="main-menu-link nav-link " href="http://localhost:3000/lk/adv-campaign"><span class="icon  ib-category"><span class="path1"></span><span class="path2"></span></span> <span
+                    class="nav-lable">Кампании </span></a></li>
+            <li class="nav-item"><a class="main-menu-link nav-link " href="http://localhost:3000/lk/teaser"><span class="icon  ib-image"><span class="path1"></span><span class="path2"></span></span> <span class="nav-lable">Тизеры </span></a></li>
+            <li class="nav-item"><a class="main-menu-link nav-link " href="http://localhost:3000/lk/statistics/teasers"><span class="icon  ib-chart"><span class="path1"></span><span class="path2"></span></span> <span
+                    class="nav-lable">Статистика </span></a></li>
+            <li class="nav-item has-treeview"><a class="main-menu-link nav-link " href="#"><span class="icon  ib-wallet"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span> <span class="nav-lable">Финансы <span
+                    class="icon  icon-chevron-down-main"></span></span></a>
+                <ul class='nav nav-treeview'>
+                    <li class="text-nowrap"><a class="main-menu-link nav-link " href="http://localhost:3000/finances"> <span class="nav-lable">История операций </span></a></li>
+                    <li class="text-nowrap"><a class="main-menu-link nav-link " href="http://localhost:3000/adm/finance"> <span class="nav-lable">История пополнений </span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a class="main-menu-link nav-link " href="http://localhost:3000/charges"><span class="icon  ib-star"><span class="path1"></span><span class="path2"></span></span> <span class="nav-lable">Пополнения </span></a></li>
+            <li class="nav-item has-treeview"><a class="main-menu-link nav-link " href="#"><span class="icon  ib-faq"><span class="path1"></span><span class="path2"></span></span> <span class="nav-lable">FAQ <span
+                    class="icon  icon-chevron-down-main"></span></span></a>
+                <ul class='nav nav-treeview'>
+                    <li class="nav-item"><a class="main-menu-link nav-link " href="/page/postback-info"> <span class="nav-lable">Настройка PostBack </span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+    </div>
+</header>
+
+<div id="charge-create" aria-hidden="true" aria-labelledby="charge-create-label" class="fade modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="charge-create-label" class="modal-title">Пополнение Capitalist</h5>
+                <button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<main>
+    <div class='page static-page'>
+        <div class='container-fluid'>
+            <div class='page-header'>
+                <h1 class='page-title mb-4'>
+                    Teaser blocks </h1>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="app"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<footer class="main-footer">
+    <div class="container-fluid footer-container">
+        <a class='footer-logo' href='/'>
+            <img alt="" class="logo" src="http://localhost:3000/images/logos/en/logo-black-slogan.svg">
+        </a>
+    </div>
+</footer>
+<script crossorigin="anonymous" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+<!--<script src="https://lk.beta.dev.lookmyteaser.name/js/main.js"></script>-->
+
+
+</body>
 </html>
