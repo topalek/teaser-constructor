@@ -6,25 +6,35 @@
       <input id="block" v-model="active" autocomplete="off" class="btn-check" type="radio" value="block">
       <input id="teaser" v-model="active" autocomplete="off" class="btn-check" type="radio" value="teaser">
       <label :class="{'active': active === 'teaser'}" class="btn btn-outline-secondary" for="teaser">Тизер</label>
+      <input id="image" v-model="active" autocomplete="off" class="btn-check" type="radio" value="image">
+      <label :class="{'active': active === 'image'}" class="btn btn-outline-secondary" for="image">Картинка</label>
+      <input id="content" v-model="active" autocomplete="off" class="btn-check" type="radio" value="content">
+      <label :class="{'active': active === 'content'}" class="btn btn-outline-secondary" for="content">Контент</label>
     </div>
-    <BlockSettings v-show="active === 'block'"/>
-    <TeaserSettings v-show="active === 'teaser'"/>
+    <Block v-show="active === 'block'"/>
+    <Ads v-show="active === 'teaser'"/>
+    <Image v-show="active === 'image'"/>
+    <Content v-show="active === 'content'"/>
   </div>
     <div class="preview">
-      <BlockPreview v-if="showPreview" :block="$store.state.block" :teaser="$store.state.teaser"/>
+      <Preview v-if="showPreview" :state="$store.state"/>
     </div>
 </template>
 
 <script>
-import BlockSettings from "./components/BlockSettings.vue";
-import BlockPreview from "./components/BlockPreview.vue";
-import TeaserSettings from "./components/TeaserSettings.vue";
+import Block from "./components/Block.vue";
+import Preview from "./components/Preview.vue";
+import Ads from "./components/Ads.vue";
+import Image from "./components/Image.vue";
+import Content from "./components/Content.vue";
 
 export default {
   components: {
-    TeaserSettings,
-    BlockSettings,
-    BlockPreview,
+    Content,
+    Image,
+    Ads,
+    Block,
+    Preview,
   },
   data() {
     return {

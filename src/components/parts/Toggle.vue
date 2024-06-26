@@ -2,24 +2,20 @@
 export default {
   name: "Toggle",
   props: {
-    modelValue: String,
-    type: {
-      type: String,
-      default: 'text'
-    },
-    min: {
-      type: Number,
-      default: 1
-    },
-    max: {
-      type: Number,
-      default: 100
+    modelValue: {
+      type: Boolean,
+      default: false
     },
     name: {
       type: String
     }
   },
-  emits: ['update:modelValue']
+  emits: ['update:modelValue'],
+  methods: {
+    emitChange(e) {
+      this.$emit('update:modelValue', e.target.checked)
+    }
+  }
 }
 </script>
 
@@ -28,7 +24,12 @@ export default {
     <span>
       <slot/>
     </span>
-    <input class="toggle" :name="name" :value="modelValue" @change="$emit('update:modelValue', $event.target.value)" type="checkbox"/>
+    <input :checked="modelValue"
+           :name="name"
+           class="toggle"
+           type="checkbox"
+           @change="emitChange"
+    />
   </label>
 </template>
 
