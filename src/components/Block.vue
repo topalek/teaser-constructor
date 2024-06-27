@@ -1,8 +1,8 @@
 <template>
   <div class="block-settings">
     <SettingsInput v-model="$store.state.block.name" name="">Название блока:</SettingsInput>
-    <Select v-model="countV" :options="[1,2,3,4,5,6,7]">Кол-во по-горизонтали:</Select>
-    <Select v-model="countH" :options="[1,2,3,4,5,6,7]">Кол-во по-вертикали:</Select>
+    <Select v-model="countH" :options="[1,2,3,4,5,6,7]">Кол-во по-горизонтали:</Select>
+    <Select v-model="countV" :options="[1,2,3,4,5,6,7]">Кол-во по-вертикали:</Select>
     <SettingsInput v-model="blockWidth" max="3000" min="20" type="number">Ширина блока</SettingsInput>
     <SettingsInput v-model="blockHeight" max="3000" min="20" type="number">Высота блока</SettingsInput>
     <SettingsInput v-model="$store.state.block.padding" max="200" min="0" type="number">Отступ</SettingsInput>
@@ -30,7 +30,7 @@ export default {
         return this.block.width;
       },
       set(value) {
-        this.updateBlockWidth(value);
+        this.updateBlockSetting({...this.block, width: value});
       },
     },
     blockHeight: {
@@ -38,28 +38,28 @@ export default {
         return this.block.height;
       },
       set(value) {
-        this.updateBlockHeight(value);
+        this.updateBlockSetting({...this.block, height: value});
       },
     },
-    adsHorizontal: {
+    countH: {
       get() {
-        return this.block.adsHorizontal;
+        return this.block.countH;
       },
       set(value) {
-        this.updateAdsHorizontal(value);
+        this.updateBlockSetting({...this.block, countH: value});
       },
     },
-    adsVertical: {
+    countV: {
       get() {
-        return this.block.adsVertical;
+        return this.block.countV;
       },
       set(value) {
-        this.updateAdsVertical(value);
+        this.updateBlockSetting({...this.block, countV: value});
       },
     },
   },
   methods: {
-    ...mapActions(['updateBlockWidth', 'updateAdsHorizontal', 'updateBlockHeight', 'updateAdsVertical']),
+    ...mapActions(['updateBlockSetting']),
   },
 }
 </script>

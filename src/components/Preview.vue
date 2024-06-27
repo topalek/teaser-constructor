@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     teaserCount() {
-      return this.state.block.adsVertical * this.state.block.adsHorizontal;
+      return this.state.block.countV * this.state.block.countH;
     },
     btnStyle() {
       return {
@@ -46,7 +46,7 @@ export default {
     listStyle() {
       return {
         display: "grid!important",
-        gridTemplateColumns: `repeat(${this.state.block.adsHorizontal}, 1fr)!important`,
+        gridTemplateColumns: `repeat(${this.state.block.countH}, 1fr)!important`,
         gap: `${this.state.block.gap}px!important`,
         backgroundColor: `${this.state.block.backgroundColor} !important`,
         padding: `${this.state.block.padding}px!important`,
@@ -59,7 +59,7 @@ export default {
     },
     teaserStyle() {
       return {
-        padding: `${this.state.teaser.verticalPadding}px ${this.state.teaser.horizontalPadding}px!important`,
+        // padding: `${this.state.teaser.verticalPadding}px ${this.state.teaser.horizontalPadding}px!important`,
         display: 'grid!important',
         gridTemplateColumns: this.state.teaser.textBottom ? '1fr 1fr' : '1fr',
         gridTemplateRows: this.state.teaser.textBottom ? '1fr' : '1fr 1fr',

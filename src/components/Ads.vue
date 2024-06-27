@@ -23,11 +23,6 @@ import {mapActions, mapState} from 'vuex';
 
 export default {
   components: {SettingsInput, ColorInput, Toggle, ColorPicker, Select},
-  // data() {
-  //   return {
-  //     border: false
-  //   }
-  // },
   computed: {
     ...mapState({
       teaser: state => state.teaser,
@@ -37,7 +32,7 @@ export default {
         return this.teaser.width;
       },
       set(value) {
-        this.updateTeaserWidth(value);
+        this.updateTeaserSetting({...this.teaser, width: value});
       },
     },
     teaserHeight: {
@@ -45,12 +40,12 @@ export default {
         return this.teaser.height;
       },
       set(value) {
-        this.updateTeaserHeight(value);
+        this.updateTeaserSetting({...this.teaser, height: value});
       },
     },
   },
   methods: {
-    ...mapActions(['updateTeaserWidth', 'updateTeaserHeight']),
+    ...mapActions(['updateTeaserSetting']),
   },
 }
 </script>
