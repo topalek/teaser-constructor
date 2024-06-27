@@ -5,7 +5,7 @@
       <a href="{url}" v-for="n in teaserCount" :key="n" :style="teaserStyle" class="enigmas__enigma">
         <div :style="imageStyle" class="enigma__picture">
           <img
-              :src="`/images/${n}.jpg`"
+              :src="`https://picsum.photos/id/${n}/500/500`"
           />
         </div>
         <div :style="contentStyle" class="enigma__footer">
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import {toPng} from 'html-to-image';
 
 export default {
   props: {
@@ -30,10 +31,22 @@ export default {
   },
   methods: {
     getScreenshot() {
-      console.log(this.payload)
-      // html2canvas(document.querySelector('.enigmas')).then(function (canvas) {
-      //   document.body.appendChild(canvas);
-      // });
+      let {width, height, backgroundColor} = this.state.block;
+      try {
+        toPng(document.querySelector('.enigmas'), {backgroundColor: backgroundColor, skipFonts: true, preferredFontFormat: 'woff2'})
+            .then(function (dataUrl) {
+              var img = new Image();
+              img.src = dataUrl;
+              img.width = width;
+              img.height = height;
+              document.body.appendChild(img);
+            })
+            .catch(function (error) {
+              console.error('oops, something went wrong!', error);
+            });
+      } catch (e) {
+
+      }
     },
     convertToCss(styleObj, selector) {
       const styles = Object.entries(styleObj).map(([key, value]) => {
