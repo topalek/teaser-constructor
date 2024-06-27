@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     teaserCount() {
-      return this.state.block.adsVertical * this.state.block.adsHorizontal;
+      return this.state.block.countV * this.state.block.countH;
     },
     btnStyle() {
       return {
@@ -46,7 +46,7 @@ export default {
     listStyle() {
       return {
         display: "grid!important",
-        gridTemplateColumns: `repeat(${this.state.block.adsHorizontal}, 1fr)!important`,
+        gridTemplateColumns: `repeat(${this.state.block.countH}, 1fr)!important`,
         gap: `${this.state.block.gap}px!important`,
         backgroundColor: `${this.state.block.backgroundColor} !important`,
         padding: `${this.state.block.padding}px!important`,

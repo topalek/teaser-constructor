@@ -76,11 +76,31 @@ const store = createStore({
             state.image.width = payload.width !== null ? payload.width : 100; // Или другое значение по умолчанию
             state.image.height = payload.height !== null ? payload.height : 100; // Или другое значение по умолчанию
             state.image.aspectRatio = payload.aspectRatio;
-        }
+        },
+        setBlockPadding(state, padding) {
+            state.block.padding = padding;
+        },
+        setBlockGap(state, gap) {
+            state.block.gap = gap;
+        },
     },
     actions: {
+        updatePadding({commit, state}, padding) {
+            commit('setBlockPadding', padding);
+            const teaserWidth = Math.ceil((state.block.width - padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
+            const teaserHeight = Math.ceil((state.block.height - padding * 2 - state.block.gap * (state.block.countV - 1)) / state.block.countV);
+            commit('setTeaserWidth', teaserWidth);
+            commit('setTeaserHeight', teaserHeight);
+        },
+        updateGap({commit, state}, gap) {
+            commit('setBlockGap', gap);
+            const teaserWidth = Math.ceil((state.block.width - state.block.padding * 2 - gap * (state.block.countH - 1)) / state.block.countH);
+            const teaserHeight = Math.ceil((state.block.height - state.block.padding * 2 - gap * (state.block.countV - 1)) / state.block.countV);
+            commit('setTeaserWidth', teaserWidth);
+            commit('setTeaserHeight', teaserHeight);
+        },
         updateBlockWidth({commit, state}, width) {
-            const teaserWidth = (width - state.block.padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH;
+            const teaserWidth = Math.ceil((width - state.block.padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
             commit('setBlockWidth', width);
             commit('setTeaserWidth', teaserWidth);
         },
@@ -91,15 +111,17 @@ const store = createStore({
                 commit('setBlockWidth', newBlockWidth);
             }
         },
+        updateTeaserHeight({commit, state}, height) {
+            const blockHeight = state.block.countV * height + state.block.padding * 2 + state.block.gap * (state.block.countV - 1);
+            commit('setTeaserHeight', height);
+            if (blockHeight > state.block.height) {
+                commit('setBlockHeight', blockHeight);
+            }
+        },
         updateBlockHeight({commit, state}, height) {
-            const teaserHeight = (height - state.block.padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH;
+            const teaserHeight = Math.ceil((height - state.block.padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
             commit('setBlockHeight', height);
             commit('setTeaserHeight', teaserHeight);
-        },
-        updateTeaserHeight({commit, state}, height) {
-            const blockHeight = state.block.countV * height + state.block.padding * 2 + state.block.gap * (state.block.countH);
-            commit('setTeaserHeight', height);
-            commit('setBlockHeight', blockWidth > state.block.height ? blockWidth : state.block.height);
         },
         updateAdsHorizontal({commit, state}, count) {
             commit('setAdsHorizontal', count);

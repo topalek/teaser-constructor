@@ -1,7 +1,7 @@
 <template>
   <div class="teaser-$store.state.teaser">
     <SettingsInput v-model="teaserWidth" max="3000" min="20" type="number">Ширина тизера</SettingsInput>
-    <SettingsInput v-model="$store.state.teaser.height" max="3000" min="20" type="number">Высота тизера</SettingsInput>
+    <SettingsInput v-model="teaserHeight" max="3000" min="20" type="number">Высота тизера</SettingsInput>
     <SettingsInput v-model="$store.state.teaser.borderRadius" max="100" min="0" type="number">Скругление</SettingsInput>
     <Toggle v-model="$store.state.teaser.showBorder">Обводка</Toggle>
     <ColorPicker v-model="$store.state.teaser.backgroundColor">Цвет фона</ColorPicker>
