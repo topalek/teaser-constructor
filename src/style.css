@@ -73,7 +73,7 @@ h1 {
   gap: 10px;
 }
 
-label.settings-input {
+.settings-input {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 10px;

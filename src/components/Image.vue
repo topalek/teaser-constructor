@@ -3,12 +3,14 @@
     <SettingsInput v-model="width" max="3000" min="20" type="number">Ширина картинки</SettingsInput>
     <SettingsInput v-model="height" max="3000" min="20" type="number">Высота картинки</SettingsInput>
     <Select v-model="aspectRatio" :options="ratios">Соотношение сторон</Select>
-    <div class="border-radius-settings">
+    <div class="settings-input">
       <label>Скругление углов</label>
-      <input v-model="$store.state.image.borderTopLeftRadius" class="form-control" max="100" min="0" type="number">
-      <input v-model="$store.state.image.borderTopRightRadius" class="form-control" max="100" min="0" type="number">
-      <input v-model="$store.state.image.borderBottomLeftRadius" class="form-control" max="100" min="0" type="number">
-      <input v-model="$store.state.image.borderBottomRightRadius" class="form-control" max="100" min="0" type="number">
+      <div class="input-settings">
+        <input v-model="$store.state.image.borderTopLeftRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="$store.state.image.borderTopRightRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="$store.state.image.borderBottomLeftRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="$store.state.image.borderBottomRightRadius" class="form-control" max="100" min="0" type="number">
+      </div>
     </div>
 
   </div>
@@ -77,11 +79,12 @@ export default {
 }
 </script>
 <style scoped>
-.border-radius-settings {
+.input-settings {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   align-items: center;
+  grid-gap: 10px;
 
   label {
     grid-column: 1/3;

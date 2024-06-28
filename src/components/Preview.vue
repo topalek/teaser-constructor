@@ -19,74 +19,76 @@
       </a>
     </div>
   </div>
-  <button @click="getScreenshot"> screenshot</button>
+  <button @click="getPayload"> screenshot</button>
 </template>
 
 <script>
-import {toPng} from 'html-to-image';
+import {toBlob} from 'html-to-image';
 
 export default {
   props: {
     state: Object,
   },
   methods: {
-    getScreenshot() {
-      let {width, height, backgroundColor} = this.state.block;
-      try {
-        toPng(document.querySelector('.enigmas'), {backgroundColor: backgroundColor, skipFonts: true, preferredFontFormat: 'woff2'})
-            .then(function (dataUrl) {
-              var img = new Image();
-              img.src = dataUrl;
-              img.width = width;
-              img.height = height;
-              document.body.appendChild(img);
-            })
-            .catch(function (error) {
-              console.error('oops, something went wrong!', error);
-            });
-      } catch (e) {
-
-      }
-    },
     convertToCss(styleObj, selector) {
       const styles = Object.entries(styleObj).map(([key, value]) => {
         const kebabKey = key.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase())
         return `${kebabKey}: ${value};`;
       }).join(' ');
       return `${selector} { ${styles} }`;
-    }
-  },
-  computed: {
-    payload() {
-      return {
-        common_template: {
-          name: this.state.block.name,
-          max_teaser: this.teaserCount,
-          max_column: this.state.block.countH,
-          max_row: this.state.block.countV,
-          width: this.state.block.width,
-          height: this.state.block.height,
-          is_common: false,
-        },
-        teaser_template: {
-          name: this.state.block.name,
-          css: this.teaserCssRules,
-          html: `<a class="enigmas__enigma" href="{url}"  target="_blank" {data}>
+    },
+    async getPayload() {
+      let {csrfToken, user, url} = document.getElementById('app').dataset;
+      let formData = new FormData()
+      let name = this.cssClass
+      let blob = toBlob(document.querySelector('.enigmas'), {skipFonts: true, preferredFontFormat: 'woff2'}).then(blob => blob);
+      let file = new File([blob], `${name}.png`, {type: 'image/png'})
+
+      formData.append('_csrf', csrfToken)
+
+      formData.append('CommonTemplate[name]', this.state.block.name || name + '-template')
+      formData.append('CommonTemplate[max_teaser]', this.teaserCount)
+      formData.append('CommonTemplate[max_column]', this.state.block.countH)
+      formData.append('CommonTemplate[max_row]', this.state.block.countV)
+      formData.append('CommonTemplate[width]', this.state.block.width)
+      formData.append('CommonTemplate[height]', this.state.block.height)
+      formData.append('CommonTemplate[is_common]', false)
+      formData.append('CommonTemplate[image]', file)
+      formData.append('CommonTemplate[user_id]', user)
+
+      formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
+      formData.append('TeaserTemplate[user_id]', user)
+      formData.append('TeaserTemplate[is_common]', false)
+      formData.append('TeaserTemplate[css]', this.teaserCssRules)
+      formData.append('TeaserTemplate[html]', `<a class="enigmas__enigma" href="{url}"  target="_blank" {data}>
         <div class="enigma__picture"><img src="{imgUrl}"/></div>
         <div class="enigma__footer">
           <p class="enigma__text">{text}</p>${this.state.teaser.showBtn ? '<div class="enigma__btn">' + this.state.btn.text + '</div>' : ''}
         </div>
-      </a>`,
-        }
-        ,
-        site_block_template: {
-          name: this.state.block.name,
-          css: this.convertToCss(this.blockStyle, `${this.cssSelector}`) + this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`),
-          html: `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`,
-        }
-      }
+      </a>`)
 
-    },
+      formData.append('SiteBlockTemplate[name]', this.state.block.name || name + '-teaser')
+      formData.append('SiteBlockTemplate[user_id]', user)
+      formData.append('SiteBlockTemplate[is_common]', false)
+      formData.append('SiteBlockTemplate[css]', this.convertToCss(this.blockStyle, `${this.cssSelector}`) + this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`))
+      formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`)
+
+      let data = await fetch(url,
+          {
+            method: 'post',
+            mode: 'no-cors',
+            body: formData,
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken,
+            }
+          })
+          .then(resp => resp.json())
+
+      console.log(data)
+    }
+  },
+  computed: {
     teaserCssRules() {
       const rules = [];
       rules.push(this.convertToCss(this.teaserStyle, `${this.cssSelector} a.enigmas__enigma`));
