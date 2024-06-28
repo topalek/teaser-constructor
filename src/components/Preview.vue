@@ -19,7 +19,9 @@
       </a>
     </div>
   </div>
-  <button @click="getPayload"> screenshot</button>
+  <div class="mt-4 d-flex justify-content-end">
+    <button @click="getPayload">Сохранить</button>
+  </div>
 </template>
 
 <script>
@@ -38,12 +40,9 @@ export default {
       return `${selector} { ${styles} }`;
     },
     async getPayload() {
-      let {csrfToken, user, url} = document.getElementById('app').dataset;
+      let {csrfToken, user, url, returnUrl} = document.getElementById('app').dataset;
       let formData = new FormData()
       let name = this.cssClass
-      let blob = toBlob(document.querySelector('.enigmas'), {skipFonts: true, preferredFontFormat: 'woff2'}).then(blob => blob);
-      let file = new File([blob], `${name}.png`, {type: 'image/png'})
-
       formData.append('_csrf', csrfToken)
 
       formData.append('CommonTemplate[name]', this.state.block.name || name + '-template')
@@ -53,7 +52,6 @@ export default {
       formData.append('CommonTemplate[width]', this.state.block.width)
       formData.append('CommonTemplate[height]', this.state.block.height)
       formData.append('CommonTemplate[is_common]', false)
-      formData.append('CommonTemplate[image]', file)
       formData.append('CommonTemplate[user_id]', user)
 
       formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
@@ -72,20 +70,24 @@ export default {
       formData.append('SiteBlockTemplate[is_common]', false)
       formData.append('SiteBlockTemplate[css]', this.convertToCss(this.blockStyle, `${this.cssSelector}`) + this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`))
       formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`)
-
-      let data = await fetch(url,
-          {
-            method: 'post',
-            mode: 'no-cors',
-            body: formData,
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': csrfToken,
-            }
-          })
-          .then(resp => resp.json())
-
-      console.log(data)
+      toBlob(document.querySelector('.enigmas'), {skipFonts: true, preferredFontFormat: 'woff2'}).then(blob => {
+        formData.append('CommonTemplate[imageFile]', blob, `${name}.png`)
+        fetch(url,
+            {
+              method: 'post',
+              mode: 'no-cors',
+              body: formData,
+              headers: {
+                'X-CSRF-Token': csrfToken,
+              }
+            })
+            .then(resp => resp.json()).then(resp => {
+          if (resp.status) {
+            window.location.href = returnUrl
+          }
+          console.error(resp.errors)
+        })
+      })
     }
   },
   computed: {

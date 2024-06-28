@@ -66,10 +66,10 @@ const store = createStore({
         setTeaserHeight(state, height) {
             state.teaser.height = height;
         },
-        setAdsVertical(state, count) {
+        setCountV(state, count) {
             state.block.countV = count
         },
-        setAdsHorizontal(state, count) {
+        setCountH(state, count) {
             state.block.countH = count
         },
         updateImage(state, payload) {
@@ -91,6 +91,7 @@ const store = createStore({
             const teaserHeight = Math.round((state.block.height - padding * 2 - state.block.gap * (state.block.countV - 1)) / state.block.countV);
             commit('setTeaserWidth', teaserWidth);
             commit('setTeaserHeight', teaserHeight);
+
         },
         updateGap({commit, state}, gap) {
             commit('setBlockGap', gap);
@@ -123,15 +124,19 @@ const store = createStore({
             commit('setBlockHeight', height);
             commit('setTeaserHeight', teaserHeight);
         },
-        updateAdsHorizontal({commit, state}, count) {
-            commit('setAdsHorizontal', count);
-            const blockWidth = count * state.teaser.width + state.block.padding * 2 + state.block.gap * (count - 1);
-            commit('setBlockWidth', blockWidth > state.block.width ? blockWidth : state.block.width);
+        updateCountH({commit, state}, count) {
+            commit('setCountH', count);
+            const newBlockWidth = count * state.teaser.width + state.block.padding * 2 + state.block.gap * (count - 1);
+            if (newBlockWidth > state.block.width) {
+                commit('setBlockWidth', newBlockWidth);
+            }
         },
-        updateAdsVertical({commit, state}, count) {
-            commit('setAdsVertical', count);
-            const blockHeight = count * state.teaser.height + state.block.padding * 2 + state.block.gap * (count - 1);
-            commit('setBlockHeight', blockHeight > state.block.height ? blockHeight : state.block.height);
+        updateCountV({commit, state}, count) {
+            commit('setCountV', count);
+            const newBlockHeight = count * state.teaser.height + state.block.padding * 2 + state.block.gap * (count - 1);
+            if (newBlockHeight > state.block.height) {
+                commit('setBlockHeight', newBlockHeight);
+            }
         }
     },
 })

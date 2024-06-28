@@ -21,43 +21,61 @@ import {mapActions, mapState} from 'vuex';
 
 export default {
   components: {Toggle, ColorPicker, Select, SettingsInput},
-  data() {
-    return {
-      gap: this.$store.state.block.gap,
-      padding: this.$store.state.block.padding,
-      blockWidth: this.$store.state.block.width,
-      blockHeight: this.$store.state.block.height,
-      countH: this.$store.state.block.countH,
-      countV: this.$store.state.block.countV,
-    }
-  },
-  watch: {
-    gap(newGap) {
-      this.updateGap(newGap);
-    },
-    padding(newPadding) {
-      this.updatePadding(newPadding);
-    },
-    blockWidth(value) {
-      this.updateBlockWidth(value);
-    },
-    blockHeight(value) {
-      this.updateBlockHeight(value);
-    },
-    countH(value) {
-      this.updateAdsHorizontal(value);
-    },
-    countV(value) {
-      this.updateAdsVertical(value);
-    },
-  },
   computed: {
     ...mapState({
       block: state => state.block,
     }),
+    gap: {
+      get() {
+        return this.block.gap;
+      },
+      set(value) {
+        this.updateGap(value);
+      }
+    },
+    padding: {
+      get() {
+        return this.block.padding;
+      },
+      set(value) {
+        this.updatePadding(value);
+      }
+    },
+    blockWidth: {
+      get() {
+        return this.block.width;
+      },
+      set(value) {
+        this.updateBlockWidth(value);
+      }
+    },
+    blockHeight: {
+      get() {
+        return this.block.height;
+      },
+      set(value) {
+        this.updateBlockHeight(value);
+      }
+    },
+    countH: {
+      get() {
+        return this.block.countH;
+      },
+      set(value) {
+        this.updateCountH(value);
+      }
+    },
+    countV: {
+      get() {
+        return this.block.countV;
+      },
+      set(value) {
+        this.updateCountV(value);
+      }
+    },
   },
   methods: {
-    ...mapActions(['updateBlockWidth', 'updateAdsHorizontal', 'updateBlockHeight', 'updateAdsVertical', 'updateGap', 'updatePadding']),
+    ...mapActions(['updateBlockWidth', 'updateCountH', 'updateBlockHeight', 'updateCountV', 'updateGap', 'updatePadding']),
   },
 }
 </script>
