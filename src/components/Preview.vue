@@ -44,7 +44,6 @@ export default {
       let formData = new FormData()
       let name = this.cssClass
       formData.append('_csrf', csrfToken)
-      console.log(JSON.stringify(this.state))
       formData.append('CommonTemplate[name]', this.state.block.name || name + '-template')
       formData.append('CommonTemplate[max_teaser]', this.teaserCount)
       formData.append('CommonTemplate[max_column]', this.state.block.countH)
@@ -55,6 +54,7 @@ export default {
       formData.append('CommonTemplate[user_id]', user)
       formData.append('SiteBlock[settings]', JSON.stringify(this.state))
       formData.append('SiteBlock[site_id]', site)
+      formData.append('SiteBlock[name]', this.state.block.name || name)
 
       formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
       formData.append('TeaserTemplate[user_id]', user)
@@ -67,7 +67,7 @@ export default {
         </div>
       </a>`)
 
-      formData.append('SiteBlockTemplate[name]', this.state.block.name || name + '-teaser')
+      formData.append('SiteBlockTemplate[name]', this.state.block.name || name + '-block')
       formData.append('SiteBlockTemplate[user_id]', user)
       formData.append('SiteBlockTemplate[is_common]', 0)
       formData.append('SiteBlockTemplate[css]', this.convertToCss(this.blockStyle, `${this.cssSelector}`) + this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`))
@@ -87,6 +87,15 @@ export default {
           if (resp.status) {
             window.location.href = returnUrl
           }
+          Object.keys(resp.errors).forEach(key => {
+            if (Object.keys(resp.errors[key]).length) {
+              Object.keys(resp.errors[key]).forEach(field => {
+                resp.errors[key][field].forEach(errorMsg => {
+                  notify(`Ошибка ${key}[${field}]: ${errorMsg}`, 'danger')
+                })
+              })
+            }
+          })
           console.error(resp.errors)
         })
       })

@@ -142,9 +142,9 @@ const store = createStore({
             }
         },
         updateBlockHeight({commit, state}, height) {
-            const teaserHeight = Math.round((height - state.block.padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
+            const newTeaserHeight = Math.round((height - state.block.padding * 2 - state.block.gap * (state.block.countV - 1)) / state.block.countV);
             commit('setBlockHeight', height);
-            commit('setTeaserHeight', teaserHeight);
+            commit('setTeaserHeight', newTeaserHeight);
         },
         updateCountH({commit, state}, count) {
             commit('setCountH', count);
