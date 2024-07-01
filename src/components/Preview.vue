@@ -44,7 +44,7 @@ export default {
       let formData = new FormData()
       let name = this.cssClass
       formData.append('_csrf', csrfToken)
-
+      console.log(JSON.stringify(this.state))
       formData.append('CommonTemplate[name]', this.state.block.name || name + '-template')
       formData.append('CommonTemplate[max_teaser]', this.teaserCount)
       formData.append('CommonTemplate[max_column]', this.state.block.countH)
@@ -53,6 +53,7 @@ export default {
       formData.append('CommonTemplate[height]', this.state.block.height)
       formData.append('CommonTemplate[is_common]', false)
       formData.append('CommonTemplate[user_id]', user)
+      formData.append('CommonTemplate[settings]', JSON.stringify(this.state))
 
       formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
       formData.append('TeaserTemplate[user_id]', user)
@@ -126,7 +127,7 @@ export default {
     },
     listStyle() {
       return {
-        display: "grid!important",
+        ...(this.state.block.responsive ? {display: "flex!important", flexWrap: 'wrap'} : {display: "grid!important"}),
         gridTemplateColumns: `repeat(${this.state.block.countH}, 1fr)!important`,
         gap: `${this.state.block.gap}px!important`,
         backgroundColor: `${this.state.block.backgroundColor} !important`,

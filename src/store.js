@@ -29,6 +29,7 @@ const store = createStore({
             image: {
                 width: '100%',
                 height: '100%',
+                aspectRatio: '1:1',
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
                 borderTopRightRadius: 0,
@@ -54,6 +55,13 @@ const store = createStore({
         }
     },
     mutations: {
+        setState(state, payload) {
+            state.block = payload.block;
+            state.text = payload.text;
+            state.image = payload.image;
+            state.btn = payload.btn;
+            state.teaser = payload.teaser;
+        },
         setBlockWidth(state, width) {
             state.block.width = width;
         },
@@ -85,6 +93,19 @@ const store = createStore({
         },
     },
     actions: {
+        initializeStore({commit}) {
+            const rootElement = document.getElementById('app');
+            const settings = rootElement ? rootElement.getAttribute('data-settings') : null;
+
+            if (settings) {
+                try {
+                    const data = JSON.parse(settings);
+                    commit('setState', data);
+                } catch (error) {
+                    console.error('Error parsing JSON from data-settings:', error);
+                }
+            }
+        },
         updatePadding({commit, state}, padding) {
             commit('setBlockPadding', padding);
             const teaserWidth = Math.round((state.block.width - padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
