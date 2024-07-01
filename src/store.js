@@ -99,7 +99,8 @@ const store = createStore({
 
             if (settings) {
                 try {
-                    const data = JSON.parse(settings);
+                    const data = JSON.parse(settings.replaceAll("'", '"'));
+                    convertStringsToNumbers(data)
                     commit('setState', data);
                 } catch (error) {
                     console.error('Error parsing JSON from data-settings:', error);
@@ -162,4 +163,36 @@ const store = createStore({
     },
 })
 
+function convertStringsToNumbers(data) {
+    if (data.block) {
+        data.block.width = Number(data.block.width);
+        data.block.height = Number(data.block.height);
+        data.block.countV = Number(data.block.countV);
+        data.block.countH = Number(data.block.countH);
+        data.block.padding = Number(data.block.padding);
+        data.block.gap = Number(data.block.gap);
+    }
+    if (data.text) {
+        data.text.fontSize = Number(data.text.fontSize);
+        data.text.lineHeight = Number(data.text.lineHeight);
+        data.text.textSize = Number(data.text.textSize);
+        data.text.paddingInline = Number(data.text.paddingInline);
+        data.text.paddingBlock = Number(data.text.paddingBlock);
+    }
+    if (data.image) {
+        data.image.borderTopLeftRadius = Number(data.image.borderTopLeftRadius);
+        data.image.borderBottomLeftRadius = Number(data.image.borderBottomLeftRadius);
+        data.image.borderTopRightRadius = Number(data.image.borderTopRightRadius);
+        data.image.borderBottomRightRadius = Number(data.image.borderBottomRightRadius);
+    }
+    if (data.btn) {
+        data.btn.borderRadius = Number(data.btn.borderRadius);
+        data.btn.marginTop = Number(data.btn.marginTop);
+    }
+    if (data.teaser) {
+        data.teaser.width = Number(data.teaser.width);
+        data.teaser.height = Number(data.teaser.height);
+        data.teaser.borderRadius = Number(data.teaser.borderRadius);
+    }
+}
 export default store

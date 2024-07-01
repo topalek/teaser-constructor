@@ -40,7 +40,7 @@ export default {
       return `${selector} { ${styles} }`;
     },
     async getPayload() {
-      let {csrfToken, user, url, returnUrl} = document.getElementById('app').dataset;
+      let {csrfToken, user, url, returnUrl, site} = document.getElementById('app').dataset;
       let formData = new FormData()
       let name = this.cssClass
       formData.append('_csrf', csrfToken)
@@ -53,7 +53,8 @@ export default {
       formData.append('CommonTemplate[height]', this.state.block.height)
       formData.append('CommonTemplate[is_common]', false)
       formData.append('CommonTemplate[user_id]', user)
-      formData.append('CommonTemplate[settings]', JSON.stringify(this.state))
+      formData.append('SiteBlock[settings]', JSON.stringify(this.state))
+      formData.append('SiteBlock[site_id]', site)
 
       formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
       formData.append('TeaserTemplate[user_id]', user)
