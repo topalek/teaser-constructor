@@ -51,14 +51,14 @@ export default {
       formData.append('CommonTemplate[max_row]', this.state.block.countV)
       formData.append('CommonTemplate[width]', this.state.block.width)
       formData.append('CommonTemplate[height]', this.state.block.height)
-      formData.append('CommonTemplate[is_common]', false)
+      formData.append('CommonTemplate[is_common]', 0)
       formData.append('CommonTemplate[user_id]', user)
       formData.append('SiteBlock[settings]', JSON.stringify(this.state))
       formData.append('SiteBlock[site_id]', site)
 
       formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
       formData.append('TeaserTemplate[user_id]', user)
-      formData.append('TeaserTemplate[is_common]', false)
+      formData.append('TeaserTemplate[is_common]', 0)
       formData.append('TeaserTemplate[css]', this.teaserCssRules)
       formData.append('TeaserTemplate[html]', `<a class="enigmas__enigma" href="{url}"  target="_blank" {data}>
         <div class="enigma__picture"><img src="{imgUrl}"/></div>
@@ -69,7 +69,7 @@ export default {
 
       formData.append('SiteBlockTemplate[name]', this.state.block.name || name + '-teaser')
       formData.append('SiteBlockTemplate[user_id]', user)
-      formData.append('SiteBlockTemplate[is_common]', false)
+      formData.append('SiteBlockTemplate[is_common]', 0)
       formData.append('SiteBlockTemplate[css]', this.convertToCss(this.blockStyle, `${this.cssSelector}`) + this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`))
       formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`)
       toBlob(document.querySelector('.enigmas'), {skipFonts: true, preferredFontFormat: 'woff2'}).then(blob => {

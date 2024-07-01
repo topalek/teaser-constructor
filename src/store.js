@@ -12,7 +12,7 @@ const store = createStore({
                 countH: 1,
                 padding: 0,
                 gap: 0,
-                backgroundColor: "#ffffff",
+                backgroundColor: "#ffffff00",
                 responsive: false,
             },
             text: {

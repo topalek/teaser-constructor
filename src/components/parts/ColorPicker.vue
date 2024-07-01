@@ -2,20 +2,59 @@
 export default {
   name: "ColorPicker",
   props: {
-    modelValue: String,
+    modelValue: {
+      type: String,
+      required: true,
+      validator(value) {
+        return /^#[0-9A-Fa-f]{8}$/.test(value); // Проверяем формат HEX с альфа-каналом
+      }
+    }
   },
   emits: ['update:modelValue'],
   data() {
     return {
-      rgba: '',
       color: '#ffffff',
-      opacity: 255
+      opacity: 1
+    }
+  },
+  watch: {
+    modelValue: {
+      immediate: true,
+      handler(newValue) {
+        this.parseColor(newValue);
+      }
     }
   },
   methods: {
-    setColor() {
-      this.rgba = this.color + (this.opacity === 255 ? "" : parseInt(this.opacity).toString(16).padStart(2, "0"))
-      this.$emit('update:modelValue', this.rgba)
+    parseColor(value) {
+      if (/^#[0-9A-Fa-f]{8}$/.test(value)) {
+        const r = parseInt(value.slice(1, 3), 16);
+        const g = parseInt(value.slice(3, 5), 16);
+        const b = parseInt(value.slice(5, 7), 16);
+        const a = parseInt(value.slice(7, 9), 16) / 255;
+
+        this.color = `#${value.slice(1, 7)}`;
+        this.opacity = a;
+      } else {
+        console.error('Invalid color format');
+      }
+    },
+    updateColor(event) {
+      const color = event.target.value;
+      this.updateModelValue(color, this.opacity);
+    },
+    updateOpacity(event) {
+      const opacity = event.target.value;
+      this.updateModelValue(this.color, opacity);
+    },
+    updateModelValue(color, opacity) {
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      const a = Math.round(opacity * 255).toString(16).padStart(2, '0');
+
+      const newColor = `#${color.slice(1, 7)}${a}`;
+      this.$emit('update:modelValue', newColor);
     }
   }
 }
@@ -26,9 +65,9 @@ export default {
     <span>
       <slot/>
     </span>
-    <div class="color-wrapper" ref="wrapper" :style="{'background-color': rgba}">
-      <input @input="setColor" v-model="color" type="color">
-      <input @input="setColor" v-model="opacity" type="range" min="0" max="255" step="1" value="255"/>
+    <div ref="wrapper" :style="{'background-color': modelValue}" class="color-wrapper">
+      <input v-model="color" type="color" @input="updateColor">
+      <input v-model="opacity" max="1" min="0" step="0.01" type="range" @input="updateOpacity"/>
     </div>
 
   </label>
