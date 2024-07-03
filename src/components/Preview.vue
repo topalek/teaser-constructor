@@ -1,8 +1,8 @@
 <template>
-  <h3 v-if="$store.state.block.name">{{ $store.state.block.name }}</h3>
+  <h3 v-if="state.block.name">{{ state.block.name }}</h3>
   <div :class="cssClass" :style="blockStyle" class="enigmas">
     <div ref="list" :style='listStyle' class="enigmas__list">
-      <a href="{url}" v-for="n in teaserCount" :key="n" :style="teaserStyle" class="enigmas__enigma">
+      <a v-for="n in teaserCount" :key="n" :class="{'enigma__zoom': state.teaser.zoom}" :style="teaserStyle" class="enigmas__enigma" href="{url}">
         <div :style="imageStyle" class="enigma__picture">
           <img
               :src="`https://picsum.photos/id/${n}/500/500`"
@@ -175,12 +175,25 @@ export default {
         borderBottomLeftRadius: `${this.state.image.borderBottomLeftRadius}px!important`,
         borderTopRightRadius: `${this.state.image.borderTopRightRadius}px!important`,
         borderBottomRightRadius: `${this.state.image.borderBottomRightRadius}px!important`,
+        justifySelf: `${this.state.image.justifySelf}!important`,
+        alignSelf: `${this.state.image.alignSelf}!important`,
+        ...(this.state.image.cover && {
+          gridColumn: this.state.teaser.textBottom ? '1/3' : '1/3',
+          gridRow: this.state.teaser.textBottom ? '1/3' : '1/3',
+        })
       };
     },
     contentStyle() {
       return {
         paddingInline: `${this.state.text.paddingInline}px!important`,
         paddingBlock: `${this.state.text.paddingBlock}px!important`,
+        maxWidth: `100%!important`,
+        maxHeight: `100%!important`,
+        ...(this.state.image.cover && {
+          gridColumn: this.state.teaser.textBottom ? '2/3' : '1/3',
+          gridRow: this.state.teaser.textBottom ? '1/3' : '2/3',
+          position: 'relative',
+        })
       }
     },
     textStyle() {

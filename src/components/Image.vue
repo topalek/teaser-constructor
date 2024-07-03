@@ -3,13 +3,16 @@
     <SettingsInput v-model="width" max="3000" min="20" type="number">Ширина картинки</SettingsInput>
     <SettingsInput v-model="height" max="3000" min="20" type="number">Высота картинки</SettingsInput>
     <Select v-model="aspectRatio" :options="ratios">Соотношение сторон</Select>
+    <Toggle v-model="$store.state.image.cover">Картинка во весь тизер</Toggle>
+    <Select v-model="image.justifySelf" :options="alignment">Выравнивание</Select>
+    <Select v-model="image.alignSelf" :options="alignment">Выравнивание</Select>
     <div class="settings-input">
       <label>Скругление углов</label>
       <div class="input-settings">
-        <input v-model="$store.state.image.borderTopLeftRadius" class="form-control" max="100" min="0" type="number">
-        <input v-model="$store.state.image.borderTopRightRadius" class="form-control" max="100" min="0" type="number">
-        <input v-model="$store.state.image.borderBottomLeftRadius" class="form-control" max="100" min="0" type="number">
-        <input v-model="$store.state.image.borderBottomRightRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="image.borderTopLeftRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="image.borderTopRightRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="image.borderBottomLeftRadius" class="form-control" max="100" min="0" type="number">
+        <input v-model="image.borderBottomRightRadius" class="form-control" max="100" min="0" type="number">
       </div>
     </div>
 
@@ -22,6 +25,7 @@ import ColorPicker from "./parts/ColorPicker.vue";
 import Toggle from "./parts/Toggle.vue";
 import ColorInput from "./parts/ColorInput.vue";
 import SettingsInput from "./parts/SettingsInput.vue";
+import {mapState} from "vuex";
 
 export default {
   components: {SettingsInput, ColorInput, Toggle, ColorPicker, Select},
@@ -34,8 +38,19 @@ export default {
         {value: '1:1', text: '1:1'},
         {value: '4:3', text: '4:3'},
         {value: '16:9', text: '16:9'},
+      ],
+      alignment: [
+        'auto',
+        'start',
+        'center',
+        'end',
       ]
     }
+  },
+  computed: {
+    ...mapState({
+      image: state => state.image,
+    }),
   },
   watch: {
     width(newWidth) {

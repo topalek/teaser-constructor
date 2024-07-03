@@ -2,9 +2,10 @@
   <div class="teaser-$store.state.teaser">
     <SettingsInput v-model="teaserWidth" max="3000" min="20" type="number">Ширина тизера</SettingsInput>
     <SettingsInput v-model="teaserHeight" max="3000" min="20" type="number">Высота тизера</SettingsInput>
-    <SettingsInput v-model="$store.state.teaser.borderRadius" max="100" min="0" type="number">Скругление</SettingsInput>
-    <Toggle v-model="$store.state.teaser.showBorder">Обводка</Toggle>
-    <ColorPicker v-model="$store.state.teaser.backgroundColor">Цвет фона</ColorPicker>
+    <SettingsInput v-model="teaser.borderRadius" max="100" min="0" type="number">Скругление</SettingsInput>
+    <Toggle v-model="teaser.showBorder">Обводка</Toggle>
+    <Toggle v-model="teaser.zoom">Увеличение при наведении</Toggle>
+    <ColorPicker v-model="teaser.backgroundColor">Цвет фона</ColorPicker>
     <label class="settings-text">
       <span>Текст снизу</span>
       <input v-model="$store.state.teaser.textBottom" class="toggle" type="checkbox"/>
@@ -23,11 +24,6 @@ import {mapActions, mapState} from 'vuex';
 
 export default {
   components: {SettingsInput, ColorInput, Toggle, ColorPicker, Select},
-  // data() {
-  //   return {
-  //     border: false
-  //   }
-  // },
   computed: {
     ...mapState({
       teaser: state => state.teaser,
@@ -55,6 +51,14 @@ export default {
 }
 </script>
 <style scoped>
+.enigmas__enigma.enigma__zoom .enigma__picture img {
+  transform: scale(0);
+  transition: transform 0.5s;
+}
+
+.enigmas__enigma.enigma__zoom:hover .enigma__picture img {
+  transform: scale(1.2);
+}
 .settings-text {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

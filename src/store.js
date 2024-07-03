@@ -5,7 +5,6 @@ const store = createStore({
         return {
             block: {
                 name: "",
-                type: 1,
                 width: 300,
                 height: 200,
                 countV: 1,
@@ -30,6 +29,9 @@ const store = createStore({
                 width: '100%',
                 height: '100%',
                 aspectRatio: '1:1',
+                cover: false,
+                justifySelf: 'auto',
+                alignSelf: 'auto',
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
                 borderTopRightRadius: 0,
@@ -51,6 +53,7 @@ const store = createStore({
                 showBorder: false,
                 backgroundColor: '#ffffff',
                 showBtn: false,
+                zoom: false,
             }
         }
     },
