@@ -205,6 +205,7 @@ export default {
         textAlign: this.state.text.textAlign + '!important',
         fontWeight: this.state.text.fontStyle === "bold" ? "bold" : "normal",
         fontStyle: this.state.text.fontStyle === "italic" ? "italic" : "normal",
+        textShadow: this.state.text.shadow ? "0 0 5px #000,0 0 3px #000,0 0 10px #000" : "none",
         transition: "color 0.3s",
       };
     },

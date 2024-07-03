@@ -1,19 +1,20 @@
 <template>
   <div class="teaser-content">
-    <Select v-model="$store.state.text.fontStyle" :options="['normal','bold','italic']">Стиль теста</Select>
-    <Select v-model="$store.state.text.fontFamily" :options="fonts">Шрифт</Select>
-    <Select v-model="$store.state.text.textAlign" :options="textAlign">Выравнивание текста</Select>
-    <SettingsInput v-model="$store.state.text.fontSize" max="22" min="8" type="number">Размер шрифта
+    <Select v-model="text.fontStyle" :options="['normal','bold','italic']">Стиль теста</Select>
+    <Select v-model="text.fontFamily" :options="fonts">Шрифт</Select>
+    <Select v-model="text.textAlign" :options="textAlign">Выравнивание текста</Select>
+    <SettingsInput v-model="text.fontSize" max="22" min="8" type="number">Размер шрифта
     </SettingsInput>
-    <SettingsInput v-model="$store.state.text.lineHeight" :step="0.1" min="0.8" type="number">Ширина линии
+    <SettingsInput v-model="text.lineHeight" :step="0.1" min="0.8" type="number">Ширина линии
     </SettingsInput>
-    <SettingsInput v-model="$store.state.text.paddingInline" max="200" min="0" type="number">Отступы Inline
+    <SettingsInput v-model="text.paddingInline" max="200" min="0" type="number">Отступы Inline
     </SettingsInput>
-    <SettingsInput v-model="$store.state.text.paddingBlock" max="200" min="0" type="number">Отступы Block
+    <SettingsInput v-model="text.paddingBlock" max="200" min="0" type="number">Отступы Block
     </SettingsInput>
-    <ColorInput v-model="$store.state.text.color">Цвет текста</ColorInput>
-    <Toggle v-model="$store.state.teaser.showBtn">Показать кнопку</Toggle>
-    <template v-if="$store.state.teaser.showBtn">
+    <Toggle v-model="text.shadow">Тень текста</Toggle>
+    <ColorInput v-model="text.color">Цвет текста</ColorInput>
+    <Toggle v-model="teaser.showBtn">Показать кнопку</Toggle>
+    <template v-if="teaser.showBtn">
       <Select v-model="$store.state.btn.text" :options="btnText">Текст кнопки</Select>
       <ColorInput v-model="$store.state.btn.color">Цвет текста кнопки</ColorInput>
       <ColorInput v-model="$store.state.btn.backgroundColor">Цвет фона кнопки</ColorInput>
@@ -52,6 +53,7 @@ export default {
   computed: {
     ...mapState({
       teaser: state => state.teaser,
+      text: state => state.text,
     }),
   },
   methods: {

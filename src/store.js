@@ -24,6 +24,7 @@ const store = createStore({
                 paddingInline: 0,
                 paddingBlock: 0,
                 textAlign: 'left',
+                shadow: false,
             },
             image: {
                 width: '100%',
