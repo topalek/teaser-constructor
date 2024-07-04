@@ -6,6 +6,8 @@
     <Toggle v-model="teaser.showBorder">Обводка</Toggle>
     <Toggle v-model="teaser.zoom">Увеличение при наведении</Toggle>
     <ColorPicker v-model="teaser.backgroundColor">Цвет фона</ColorPicker>
+    <Select v-model="teaser.imgFr" :options="[1,2,3,4,5,6,7,8,9,10]">Колонок картинки</Select>
+    <Select v-model="teaser.textFr" :options="[1,2,3,4,5,6,7,8,9,10]">Колонок контента</Select>
     <label class="settings-text">
       <span>Текст снизу</span>
       <input v-model="$store.state.teaser.textBottom" class="toggle" type="checkbox"/>

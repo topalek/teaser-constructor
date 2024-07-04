@@ -45,6 +45,7 @@ const store = createStore({
                 backgroundColor: "#165da8",
                 borderRadius: 0,
                 marginTop: 0,
+                justifySelf: 'auto'
             },
             teaser: {
                 textBottom: true,
@@ -55,6 +56,8 @@ const store = createStore({
                 backgroundColor: '#ffffff',
                 showBtn: false,
                 zoom: false,
+                imgFr: 1,
+                textFr: 1,
             }
         }
     },

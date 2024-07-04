@@ -21,6 +21,7 @@
       <SettingsInput v-model="$store.state.btn.borderRadius" max="100" min="0" type="number">Скругление кнопки</SettingsInput>
       <SettingsInput v-model="$store.state.btn.marginTop" max="100" min="0" type="number">Отступ сверху</SettingsInput>
       <Toggle v-model="$store.state.btn.bold">Текст жирный</Toggle>
+      <Select v-model="$store.state.btn.justifySelf" :options="['auto','start','center','end']">Выравнивание кнопки</Select>
     </template>
   </div>
 </template>

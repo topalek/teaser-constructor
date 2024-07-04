@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="mt-4 d-flex justify-content-end">
-    <button @click="getPayload">Сохранить</button>
+    <button class="btn btn-accent" @click="getPayload">Сохранить</button>
   </div>
 </template>
 
@@ -39,7 +39,8 @@ export default {
       }).join(' ');
       return `${selector} { ${styles} }`;
     },
-    async getPayload() {
+    async getPayload(e) {
+      e.target.disabled = true
       let {csrfToken, user, url, returnUrl, site} = document.getElementById('app').dataset;
       let formData = new FormData()
       let name = this.cssClass
@@ -97,6 +98,7 @@ export default {
             }
           })
           console.error(resp.errors)
+          e.target.disabled = false
         })
       })
     }
@@ -129,6 +131,8 @@ export default {
         justifyContent: 'center',
         alignItems: 'center',
         height: '40px',
+        justifySelf: this.state.btn.justifySelf,
+        paddingInline: '1rem!important',
         ...this.state.btn,
         borderRadius: `${this.state.btn.borderRadius}px`,
         marginTop: `${this.state.btn.marginTop}px!important`,
@@ -152,8 +156,8 @@ export default {
     teaserStyle() {
       return {
         display: 'grid!important',
-        gridTemplateColumns: this.state.teaser.textBottom ? '1fr 1fr' : '1fr',
-        gridTemplateRows: this.state.teaser.textBottom ? '1fr' : '1fr 1fr',
+        gridTemplateColumns: this.state.teaser.textBottom ? `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr` : '1fr',
+        gridTemplateRows: this.state.teaser.textBottom ? '1fr' : `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr`,
         width: `${this.state.teaser.width}px!important`,
         height: `${this.state.teaser.height}px!important`,
         flexDirection: this.state.teaser.textBottom ? 'column!important' : 'row!important',
@@ -187,6 +191,7 @@ export default {
       return {
         paddingInline: `${this.state.text.paddingInline}px!important`,
         paddingBlock: `${this.state.text.paddingBlock}px!important`,
+        display: 'grid!important',
         maxWidth: `100%!important`,
         maxHeight: `100%!important`,
         ...(this.state.image.cover && {
