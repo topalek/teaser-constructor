@@ -1,13 +1,13 @@
 <template>
   <div class="image-settings">
-    <SettingsInput v-model="width" max="3000" min="20" type="number">Ширина картинки</SettingsInput>
-    <SettingsInput v-model="height" max="3000" min="20" type="number">Высота картинки</SettingsInput>
+    <SettingsInput v-model="width" max="3000" min="20" type="number">Ширина картинки, px</SettingsInput>
+    <SettingsInput v-model="height" max="3000" min="20" type="number">Высота картинки, px</SettingsInput>
     <Select v-model="aspectRatio" :options="ratios">Соотношение сторон</Select>
     <Toggle v-model="$store.state.image.cover">Картинка во весь тизер</Toggle>
     <Select v-model="image.justifySelf" :options="alignment">Выравнивание</Select>
     <Select v-model="image.alignSelf" :options="alignment">Выравнивание</Select>
     <div class="settings-input">
-      <label>Скругление углов</label>
+      <label>Скругление углов, px</label>
       <div class="input-settings">
         <input v-model="image.borderTopLeftRadius" class="form-control" max="100" min="0" type="number">
         <input v-model="image.borderTopRightRadius" class="form-control" max="100" min="0" type="number">
@@ -40,10 +40,10 @@ export default {
         {value: '16:9', text: '16:9'},
       ],
       alignment: [
-        'auto',
-        'start',
-        'center',
-        'end',
+        {value: 'auto', text: 'По-умолчанию'},
+        {value: 'start', text: 'Начало'},
+        {value: 'center', text: 'По-центру'},
+        {value: 'end', text: 'Конец'},
       ]
     }
   },

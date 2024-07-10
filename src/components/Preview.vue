@@ -145,17 +145,25 @@ export default {
         gridTemplateColumns: `repeat(${this.state.block.countH}, 1fr)!important`,
         gap: `${this.state.block.gap}px!important`,
         backgroundColor: `${this.state.block.backgroundColor} !important`,
-        padding: `${this.state.block.padding}px!important`,
+        paddingBlock: `${this.state.block.paddingBlock}px!important`,
+        paddingInline: `${this.state.block.paddingInline}px!important`,
       }
     },
     blockStyle() {
       return {
+        borderBottom: this.state.block.bb ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderTop: this.state.block.bt ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderLeft: this.state.block.bl ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderRight: this.state.block.br ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderRadius: `${this.state.block.borderRadius}px!important`,
         ...(this.state.block.responsive ? {width: "100%", display: "flex!important", flexWrap: "wrap!important", height: 'auto!important'} : {width: `${this.state.block.width}px!important`, height: `${this.state.block.height}px!important`})
       }
     },
     teaserStyle() {
       return {
         display: 'grid!important',
+        paddingBlock: `${this.state.teaser.paddingBlock}px!important`,
+        paddingInline: `${this.state.teaser.paddingInline}px!important`,
         gridTemplateColumns: this.state.teaser.textBottom ? `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr` : '1fr',
         gridTemplateRows: this.state.teaser.textBottom ? '1fr' : `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr`,
         width: `${this.state.teaser.width}px!important`,
@@ -204,12 +212,13 @@ export default {
     textStyle() {
       return {
         fontFamily: this.state.text.fontFamily + '!important',
-        lineHeight: this.state.text.lineHeight + '!important',
+        lineHeight: `${this.state.text.lineHeight}px!important`,
         fontSize: `${this.state.text.fontSize}px!important`,
         color: this.state.text.color + '!important',
         textAlign: this.state.text.textAlign + '!important',
-        fontWeight: this.state.text.fontStyle === "bold" ? "bold" : "normal",
-        fontStyle: this.state.text.fontStyle === "italic" ? "italic" : "normal",
+        fontWeight: this.state.text.bold ? 700 : 500,
+        textDecoration: this.state.text.underline ? `underline` : 'none',
+        fontStyle: this.state.text.italic ? "italic!important" : "normal!important",
         textShadow: this.state.text.shadow ? "0 0 5px #000,0 0 3px #000,0 0 10px #000" : "none",
         transition: "color 0.3s",
       };

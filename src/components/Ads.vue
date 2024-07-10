@@ -1,8 +1,10 @@
 <template>
   <div class="teaser-$store.state.teaser">
-    <SettingsInput v-model="teaserWidth" max="3000" min="20" type="number">Ширина тизера</SettingsInput>
-    <SettingsInput v-model="teaserHeight" max="3000" min="20" type="number">Высота тизера</SettingsInput>
-    <SettingsInput v-model="teaser.borderRadius" max="100" min="0" type="number">Скругление</SettingsInput>
+    <SettingsInput v-model="teaserWidth" max="3000" min="20" type="number">Ширина тизера, px</SettingsInput>
+    <SettingsInput v-model="teaserHeight" max="3000" min="20" type="number">Высота тизера, px</SettingsInput>
+    <SettingsInput v-model="teaser.borderRadius" max="100" min="0" type="number">Скругление, px</SettingsInput>
+    <SettingsInput v-model="teaser.paddingInline" max="100" min="0" type="number">Отступы по-горизонтали, px</SettingsInput>
+    <SettingsInput v-model="teaser.paddingBlock" max="100" min="0" type="number">Отступы по-вертикали, px</SettingsInput>
     <Toggle v-model="teaser.showBorder">Обводка</Toggle>
     <Toggle v-model="teaser.zoom">Увеличение при наведении</Toggle>
     <ColorPicker v-model="teaser.backgroundColor">Цвет фона</ColorPicker>

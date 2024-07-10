@@ -9,16 +9,27 @@ const store = createStore({
                 height: 200,
                 countV: 1,
                 countH: 1,
-                padding: 0,
+                paddingInline: 0,
+                paddingBlock: 0,
                 gap: 0,
+                bb: false,
+                bt: false,
+                br: false,
+                bl: false,
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderRadius: 0,
+                borderColor: "#000000ff",
                 backgroundColor: "#ffffff00",
                 responsive: false,
             },
             text: {
-                fontStyle: "normal",
+                bold: false,
+                italic: false,
+                underline: false,
                 fontSize: 14,
-                fontFamily: "Arial, sans-serif",
-                lineHeight: 1.5,
+                fontFamily: "'Arial', sans-serif",
+                lineHeight: 14,
                 textSize: 14,
                 color: "#000000",
                 paddingInline: 0,
@@ -52,6 +63,8 @@ const store = createStore({
                 width: 300,
                 height: 200,
                 borderRadius: 0,
+                paddingInline: 0,
+                paddingBlock: 0,
                 showBorder: false,
                 backgroundColor: '#ffffff',
                 showBtn: false,
@@ -92,11 +105,17 @@ const store = createStore({
             state.image.height = payload.height !== null ? payload.height : 100; // Или другое значение по умолчанию
             state.image.aspectRatio = payload.aspectRatio;
         },
-        setBlockPadding(state, padding) {
-            state.block.padding = padding;
+        setBlockPaddingInline(state, padding) {
+            state.block.paddingInline = padding;
+        },
+        setBlockPaddingBlock(state, padding) {
+            state.block.paddingBlock = padding;
         },
         setBlockGap(state, gap) {
             state.block.gap = gap;
+        },
+        setBorderWidth(state, width) {
+            state.block.borderWidth = width;
         },
     },
     actions: {
@@ -114,55 +133,67 @@ const store = createStore({
                 }
             }
         },
-        updatePadding({commit, state}, padding) {
-            commit('setBlockPadding', padding);
-            const teaserWidth = Math.round((state.block.width - padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
-            const teaserHeight = Math.round((state.block.height - padding * 2 - state.block.gap * (state.block.countV - 1)) / state.block.countV);
+        updateBorderWidth({commit, state}, width) {
+            commit('setBorderWidth', width);
+            console.log(+state.block.br, +state.block.bl)
+            const teaserWidth = Math.round((state.block.width - state.block.paddingInline * 2 - state.block.gap * (state.block.countH - 1) - (+state.block.br * state.block.borderWidth) - (+state.block.bl * state.block.borderWidth)) / state.block.countH);
+            const teaserHeight = Math.round((state.block.height - state.block.paddingBlock * 2 - state.block.gap * (state.block.countV - 1) - (+state.block.bt * state.block.borderWidth) - (+state.block.bb * state.block.borderWidth)) / state.block.countV);
             commit('setTeaserWidth', teaserWidth);
+            commit('setTeaserHeight', teaserHeight);
+        },
+        updatePaddingInline({commit, state}, padding) {
+            commit('setBlockPaddingInline', padding);
+            const teaserWidth = Math.round((state.block.width - padding * 2 - state.block.gap * (state.block.countH - 1) - (+state.block.br * state.block.borderWidth) - (+state.block.bl * state.block.borderWidth)) / state.block.countH);
+            commit('setTeaserWidth', teaserWidth);
+
+        },
+        updatePaddingBlock({commit, state}, padding) {
+            commit('setBlockPaddingBlock', padding);
+            const teaserHeight = Math.round((state.block.height - padding * 2 - state.block.gap * (state.block.countV - 1) - (+state.block.bt * state.block.borderWidth) - (+state.block.bb * state.block.borderWidth)) / state.block.countV);
             commit('setTeaserHeight', teaserHeight);
 
         },
         updateGap({commit, state}, gap) {
             commit('setBlockGap', gap);
-            const teaserWidth = Math.round((state.block.width - state.block.padding * 2 - gap * (state.block.countH - 1)) / state.block.countH);
-            const teaserHeight = Math.round((state.block.height - state.block.padding * 2 - gap * (state.block.countV - 1)) / state.block.countV);
+            const teaserWidth = Math.round((state.block.width - state.block.paddingInline * 2 - gap * (state.block.countH - 1) - (+state.block.br) * state.block.borderWidth - (+state.block.bl) * state.block.borderWidth) / state.block.countH);
+            const teaserHeight = Math.round((state.block.height - state.block.paddingBlock * 2 - gap * (state.block.countV - 1) - (+state.block.bt) * state.block.borderWidth - (+state.block.bb) * state.block.borderWidth) / state.block.countV);
             commit('setTeaserWidth', teaserWidth);
             commit('setTeaserHeight', teaserHeight);
         },
         updateBlockWidth({commit, state}, width) {
-            const teaserWidth = Math.round((width - state.block.padding * 2 - state.block.gap * (state.block.countH - 1)) / state.block.countH);
+            const teaserWidth = Math.round((width - state.block.paddingInline * 2 - state.block.gap * (state.block.countH - 1) - (+state.block.br * state.block.borderWidth) - (+state.block.bl * state.block.borderWidth)) / state.block.countH);
             commit('setBlockWidth', width);
             commit('setTeaserWidth', teaserWidth);
         },
         updateTeaserWidth({commit, state}, width) {
-            const newBlockWidth = state.block.countH * width + state.block.padding * 2 + state.block.gap * (state.block.countH - 1);
+            const newBlockWidth = state.block.countH * width + state.block.paddingInline * 2 + state.block.gap * (state.block.countH - 1) + (+state.block.br * state.block.borderWidth) + (+state.block.bl * state.block.borderWidth);
             commit('setTeaserWidth', width);
             if (newBlockWidth > state.block.width) {
                 commit('setBlockWidth', newBlockWidth);
             }
         },
         updateTeaserHeight({commit, state}, height) {
-            const blockHeight = state.block.countV * height + state.block.padding * 2 + state.block.gap * (state.block.countV - 1);
+            const blockHeight = state.block.countV * height + state.block.paddingBlock * 2 + state.block.gap * (state.block.countV - 1) + (+state.block.bt * state.block.borderWidth) + (+state.block.bb * state.block.borderWidth);
             commit('setTeaserHeight', height);
             if (blockHeight > state.block.height) {
                 commit('setBlockHeight', blockHeight);
             }
         },
         updateBlockHeight({commit, state}, height) {
-            const newTeaserHeight = Math.round((height - state.block.padding * 2 - state.block.gap * (state.block.countV - 1)) / state.block.countV);
+            const newTeaserHeight = Math.round((height - state.block.paddingBlock * 2 - state.block.gap * (state.block.countV - 1) - (+state.block.bt * state.block.borderWidth) - (+state.block.bb * state.block.borderWidth)) / state.block.countV);
             commit('setBlockHeight', height);
             commit('setTeaserHeight', newTeaserHeight);
         },
         updateCountH({commit, state}, count) {
             commit('setCountH', count);
-            const newBlockWidth = count * state.teaser.width + state.block.padding * 2 + state.block.gap * (count - 1);
+            const newBlockWidth = count * state.teaser.width + state.block.paddingInline * 2 + state.block.gap * (count - 1) + (+state.block.br * state.block.borderWidth) + (+state.block.bl * state.block.borderWidth);
             if (newBlockWidth > state.block.width) {
                 commit('setBlockWidth', newBlockWidth);
             }
         },
         updateCountV({commit, state}, count) {
             commit('setCountV', count);
-            const newBlockHeight = count * state.teaser.height + state.block.padding * 2 + state.block.gap * (count - 1);
+            const newBlockHeight = count * state.teaser.height + state.block.paddingBlock * 2 + state.block.gap * (count - 1) + (+state.block.bt * state.block.borderWidth) + (+state.block.bb * state.block.borderWidth);
             if (newBlockHeight > state.block.height) {
                 commit('setBlockHeight', newBlockHeight);
             }
@@ -202,4 +233,5 @@ function convertStringsToNumbers(data) {
         data.teaser.borderRadius = Number(data.teaser.borderRadius);
     }
 }
+
 export default store
