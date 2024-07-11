@@ -17,28 +17,30 @@ export default {
     },
     step: {
       type: Number,
-      default:1
+      default: 1
     },
     name: {
       type: String
     }
   },
   emits: ['update:modelValue'],
-  // watch: {
-  //   modelValue(newValue) {
-  //     if (this.type === 'number' && newValue !== '') {
-  //       let value = Number(newValue);
-  //       if (isNaN(value)) {
-  //         value = this.min;
-  //       } else if (value < this.min) {
-  //         value = this.min;
-  //       } else if (value > this.max) {
-  //         value = this.max;
-  //       }
-  //       this.$emit('update:modelValue', value.toString());
-  //     }
-  //   }
-  // },
+  watch: {
+    modelValue(newValue) {
+      if (this.type === 'number') {
+        let value = Number(newValue);
+        if (isNaN(value)) {
+          value = this.min;
+        }
+        // else if (value < this.min) {
+        //   value = this.min;
+        // } else
+        if (value > this.max) {
+          value = this.max;
+        }
+        this.$emit('update:modelValue', value.toString() || 0);
+      }
+    }
+  },
   methods: {
     validateValue(event) {
       let value = event.target.value;

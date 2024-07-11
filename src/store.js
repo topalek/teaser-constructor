@@ -7,6 +7,7 @@ const store = createStore({
                 name: "",
                 width: 300,
                 height: 200,
+                type: 1,
                 countV: 1,
                 countH: 1,
                 paddingInline: 0,
