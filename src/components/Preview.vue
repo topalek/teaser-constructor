@@ -216,7 +216,7 @@ export default {
         fontSize: `${this.state.text.fontSize}px!important`,
         color: this.state.text.color + '!important',
         textAlign: this.state.text.textAlign + '!important',
-        fontWeight: this.state.text.bold ? 700 : 500,
+        fontWeight: this.state.text.bold ? 700 : 400,
         textDecoration: this.state.text.underline ? `underline` : 'none',
         fontStyle: this.state.text.italic ? "italic!important" : "normal!important",
         textShadow: this.state.text.shadow ? "0 0 5px #000,0 0 3px #000,0 0 10px #000" : "none",

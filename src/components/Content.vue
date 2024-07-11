@@ -90,12 +90,16 @@ export default {
   data() {
     return {
       fonts: [
-        "'Arial', sans-serif",
-        "'Roboto', sans-serif",
-        "'Georgia', serif",
-        "'Gill Sans', sans-serif",
-        "'Open Sans', sans-serif",
-        "system-ui",
+        {value: "'Arial', sans-serif", text: 'Arial'},
+        {value: "'League Gothic', sans-serif", text: 'League Gothic'},
+        {value: '"Noto Sans", sans-serif', text: "Noto Sans"},
+        {value: '"Ysabeau Office", sans-serif', text: "Ysabeau Office"},
+        {value: '"PT Sans", sans-serif', text: "PT Sans"},
+        {value: "'Roboto', sans-serif", text: 'Roboto'},
+        {value: "'Georgia', serif", text: 'Georgia'},
+        {value: "'Gill Sans', sans-serif", text: 'Gill Sans'},
+        {value: "'Open Sans', sans-serif", text: 'Open Sans'},
+        {value: "system-ui", text: 'System'},
       ],
       textAlign: [
         {value: "left", text: 'Слева'},

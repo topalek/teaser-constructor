@@ -97,6 +97,7 @@ h1 {
 .preview {
   grid-column: 2/-1;
     background-color: #747bff;
+  overflow: auto;
     /*background: url("./assets/checkerboard.jpg");*/
     /*background-size: 5%;*/
   padding: 40px;
