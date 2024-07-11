@@ -29,7 +29,7 @@ const store = createStore({
                 italic: false,
                 underline: false,
                 fontSize: 14,
-                fontFamily: "'Arial', sans-serif",
+                fontFamily: '"Arial", sans-serif',
                 lineHeight: 14,
                 textSize: 14,
                 color: "#000000",
@@ -52,12 +52,17 @@ const store = createStore({
             },
             btn: {
                 text: 'Узнать больше',
-                bold: false,
+                textAlign: 'left',
                 color: "#ffffff",
                 backgroundColor: "#165da8",
+                backgroundHoverColor: "#FFFD58",
                 borderRadius: 0,
                 marginTop: 0,
-                justifySelf: 'auto'
+                marginBottom: 0,
+                justifySelf: 'auto',
+                bold: false,
+                italic: false,
+                underline: false,
             },
             teaser: {
                 textBottom: true,

@@ -7,6 +7,10 @@ export default {
       type: String,
       default: 'text'
     },
+    empty: {
+      type: Boolean,
+      default: false
+    },
     min: {
       type: Number,
       default: 1
@@ -28,9 +32,9 @@ export default {
     modelValue(newValue) {
       if (this.type === 'number') {
         let value = Number(newValue);
-        if (isNaN(value)) {
-          value = this.min;
-        }
+        // if (isNaN(value)) {
+        //   value = this.min;
+        // }
         // else if (value < this.min) {
         //   value = this.min;
         // } else

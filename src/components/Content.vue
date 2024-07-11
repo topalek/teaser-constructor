@@ -51,28 +51,53 @@
       </div>
     </div>
 
-    <SettingsInput v-model="text.fontSize" max="22" min="8" type="number">Размер шрифта, px
+    <SettingsInput v-model="text.fontSize" max="25" min="8" type="number">Размер шрифта, px
     </SettingsInput>
-    <SettingsInput v-model="text.lineHeight" min="8" type="number">Высота линии, px
+    <SettingsInput v-model="text.lineHeight" max="50" min="8" type="number">Высота линии, px
     </SettingsInput>
-    <SettingsInput v-model="text.paddingInline" max="200" min="0" type="number">Отступ по горизонтали, px</SettingsInput>
-    <SettingsInput v-model="text.paddingBlock" max="200" min="0" type="number">Отступ по вертикали, px</SettingsInput>
+    <SettingsInput v-model="text.paddingInline" max="100" min="0" type="number">Отступ по горизонтали, px</SettingsInput>
+    <SettingsInput v-model="text.paddingBlock" max="100" min="0" type="number">Отступ по вертикали, px</SettingsInput>
     <Toggle v-model="text.shadow">Тень текста</Toggle>
     <ColorInput v-model="text.color">Цвет текста</ColorInput>
     <Toggle v-model="teaser.showBtn">Показать кнопку</Toggle>
     <template v-if="teaser.showBtn">
-      <Select v-model="$store.state.btn.text" :options="btnText">Текст кнопки</Select>
-      <ColorInput v-model="$store.state.btn.color">Цвет текста кнопки</ColorInput>
-      <ColorInput v-model="$store.state.btn.backgroundColor">Цвет фона кнопки</ColorInput>
-      <SettingsInput v-model="$store.state.btn.borderRadius" max="100" min="0" type="number">Скругление кнопки, px</SettingsInput>
-      <SettingsInput v-model="$store.state.btn.marginTop" max="100" min="0" type="number">Отступ сверху, px</SettingsInput>
-      <Toggle v-model="$store.state.btn.bold">Текст жирный</Toggle>
-      <Select v-model="$store.state.btn.justifySelf" :options="[
-        {value:'auto',text: 'По-умолчанию'},
-        {value:'start',text: 'Начало'},
-        {value:'center',text: 'По-центру'},
-        {value:'end',text: 'Конец'},
-      ]">Выравнивание кнопки</Select>
+      <Select v-model="btn.text" :options="btnText">Текст кнопки</Select>
+      <ColorInput v-model="btn.color">Цвет текста кнопки</ColorInput>
+      <ColorInput v-model="btn.backgroundColor">Цвет фона кнопки</ColorInput>
+      <SettingsInput v-model="btn.borderRadius" max="100" min="0" type="number">Скругление кнопки, px</SettingsInput>
+      <SettingsInput v-model="btn.marginTop" max="100" min="0" type="number">Отступ сверху, px</SettingsInput>
+      <SettingsInput v-model="btn.marginBottom" max="100" min="0" type="number">Отступ снизу, px</SettingsInput>
+      <div class="font-settings">
+        <div class="style">
+          <label>Стиль шрифта</label>
+          <div class="buttons">
+            <label class="txt-btn font-weight-bold" title="Жирный">
+              <input v-model="btn.bold" type="checkbox"/>
+              Ж
+            </label>
+            <label class="txt-btn italic" title="Курсив">
+              <input v-model="btn.italic" type="checkbox"/>
+              К
+            </label>
+            <label class="txt-btn underline" title="Подчеркнутый">
+              <input v-model="btn.underline" type="checkbox"/>
+              Ч
+            </label>
+          </div>
+        </div>
+        <div class="alignment">
+          <label>Выравнивание кнопки</label>
+          <select v-model="btn.justifySelf" class="form-control">
+            <option v-for="option in [{value:'auto',text: 'По-умолчанию'},{value:'start',text: 'Начало'},{value:'center',text: 'По-центру'},{value:'end',text: 'Конец'},]"
+                    :key="option.value"
+                    :selected="modelValue === option.value"
+                    :value="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+
     </template>
   </div>
 </template>
@@ -90,29 +115,40 @@ export default {
   data() {
     return {
       fonts: [
-        {value: "'Arial', sans-serif", text: 'Arial'},
-        {value: "'League Gothic', sans-serif", text: 'League Gothic'},
+        {value: '"Arial", sans-serif', text: 'Arial'},
         {value: '"Noto Sans", sans-serif', text: "Noto Sans"},
+        {value: '"Noto Serif", serif', text: 'Noto Serif'},
         {value: '"Ysabeau Office", sans-serif', text: "Ysabeau Office"},
         {value: '"PT Sans", sans-serif', text: "PT Sans"},
+        {value: '"PT Serif", serif', text: "PT Serif"},
         {value: "'Roboto', sans-serif", text: 'Roboto'},
-        {value: "'Georgia', serif", text: 'Georgia'},
-        {value: "'Gill Sans', sans-serif", text: 'Gill Sans'},
-        {value: "'Open Sans', sans-serif", text: 'Open Sans'},
-        {value: "system-ui", text: 'System'},
+        {value: '"Roboto Slab", serif', text: 'Roboto Slab'},
+        {value: '"Source Sans 3", sans-serif', text: 'Source Sans'},
+        {value: '"Forum", serif', text: 'Forum'},
+        {value: '"Scada", sans-serif', text: 'Scada'},
+        {value: '"Tinos", serif', text: 'Tinos'},
+        {value: '"Alegreya Sans", sans-serif', text: 'Alegreya Sans'},
+        {value: '"Lora", serif', text: 'Lora'},
+        {value: '"Fira Sans", sans-serif', text: 'Fira Sans'},
+        {value: '"Ubuntu", sans-serif', text: 'Ubuntu'},
+        {value: '"Merriweather", serif', text: 'Merriweather'},
+        {value: '"Literata", serif', text: 'Literata'},
+        {value: '"Montserrat", sans-serif', text: 'Montserrat'},
+        {value: '"Open Sans", sans-serif', text: 'Open Sans'},
       ],
       textAlign: [
         {value: "left", text: 'Слева'},
         {value: "center", text: 'По-центру'},
         {value: "right", text: 'Справа'},
       ],
-      btnText: ["Узнать больше", "Подробнее", "Далее"],
+      btnText: ["Узнать больше", "Узнать подробнее", "Подробнее", "Еще", "Читать далее"],
     };
   },
   computed: {
     ...mapState({
       teaser: state => state.teaser,
       text: state => state.text,
+      btn: state => state.btn,
     }),
   },
   methods: {
@@ -130,44 +166,18 @@ export default {
   text-decoration: underline;
 }
 
+.buttons {
+  grid-template-columns: repeat(3, 50px);
+}
+
+.font-settings {
+  display: flex;
+  justify-content: space-between;
+}
 .text-settings {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-
-  label, button {
-    user-select: none;
-    display: grid;
-    place-items: center;
-    width: 38px;
-    height: 38px;
-    border: 1px solid #e6e6e6;
-    background-color: #e6e6e6;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    line-height: 1;
-    text-align: center;
-    padding: 0;
-
-    &:hover {
-      background-color: #cccccc;
-    }
-  }
-
-  input {
-    display: none;
-  }
-
-  label:has(:checked), .txt-btn.active {
-    background-color: #FFFD58;
-  }
 }
 </style>

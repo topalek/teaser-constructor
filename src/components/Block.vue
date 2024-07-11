@@ -6,9 +6,9 @@
     <Select v-model="countV" :options="[1,2,3,4,5,6,7,8,9,10]">Кол-во тизеров по-вертикали:</Select>
     <SettingsInput v-model="blockWidth" max="3000" min="20" type="number">Ширина блока, px</SettingsInput>
     <SettingsInput v-model="blockHeight" max="3000" min="20" type="number">Высота блока, px</SettingsInput>
-    <SettingsInput v-model="paddingInline" max="200" min="0" type="number">Отступ по горизонтали, px</SettingsInput>
-    <SettingsInput v-model="paddingBlock" max="200" min="0" type="number">Отступ по вертикали, px</SettingsInput>
-    <SettingsInput v-model="gap" max="200" min="0" type="number">Расстояние между тизерами, px</SettingsInput>
+    <SettingsInput v-model="paddingInline" max="100" min="0" type="number">Отступ по горизонтали, px</SettingsInput>
+    <SettingsInput v-model="paddingBlock" max="100" min="0" type="number">Отступ по вертикали, px</SettingsInput>
+    <SettingsInput v-model="gap" max="20" min="0" type="number">Расстояние между тизерами, px</SettingsInput>
     <SettingsInput v-model="$store.state.block.borderRadius" max="100" min="0" type="number">Скругление, px</SettingsInput>
     <ColorPicker v-model="$store.state.block.backgroundColor">Цвет фона</ColorPicker>
     <Toggle v-model="$store.state.block.responsive">Адаптивный</Toggle>

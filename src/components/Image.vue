@@ -1,9 +1,9 @@
 <template>
   <div class="image-settings">
-    <SettingsInput v-model="width" max="3000" min="20" type="number">Ширина картинки, px</SettingsInput>
-    <SettingsInput v-model="height" max="3000" min="20" type="number">Высота картинки, px</SettingsInput>
+    <SettingsInput v-model="width" :empty="true" max="3000" min="20" type="number">Ширина картинки, px</SettingsInput>
+    <SettingsInput v-model="height" :empty="true" max="3000" min="20" type="number">Высота картинки, px</SettingsInput>
     <Select v-model="aspectRatio" :options="ratios">Соотношение сторон</Select>
-    <Toggle v-model="$store.state.image.cover">Картинка во весь тизер</Toggle>
+    <Toggle v-model="image.cover">Картинка во весь тизер</Toggle>
     <Select v-model="image.justifySelf" :options="alignment">Выравнивание</Select>
     <Select v-model="image.alignSelf" :options="alignment">Выравнивание</Select>
     <div class="settings-input">

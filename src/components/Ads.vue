@@ -1,5 +1,5 @@
 <template>
-  <div class="teaser-$store.state.teaser">
+  <div class="teaser-settings">
     <SettingsInput v-model="teaserWidth" max="3000" min="20" type="number">Ширина тизера, px</SettingsInput>
     <SettingsInput v-model="teaserHeight" max="3000" min="20" type="number">Высота тизера, px</SettingsInput>
     <SettingsInput v-model="teaser.borderRadius" max="100" min="0" type="number">Скругление, px</SettingsInput>
@@ -10,11 +10,25 @@
     <ColorPicker v-model="teaser.backgroundColor">Цвет фона</ColorPicker>
     <Select v-model="teaser.imgFr" :options="[1,2,3,4,5,6,7,8,9,10]">Колонок картинки</Select>
     <Select v-model="teaser.textFr" :options="[1,2,3,4,5,6,7,8,9,10]">Колонок контента</Select>
-    <label class="settings-text">
-      <span>Текст снизу</span>
-      <input v-model="$store.state.teaser.textBottom" class="toggle" type="checkbox"/>
-      <span>Текст справа</span>
-    </label>
+    <div class="settings-text">
+      <label>Расположение текста</label>
+      <div class="buttons">
+        <label title="Справа">
+          <input v-model="$store.state.teaser.textBottom" :value="true" type="radio">
+          <svg height="1em" viewBox="0 0 20 20" width="1em" xmlns="http://www.w3.org/2000/svg">
+            <path d="m16 10l-5-4v3H6v2h5v3z" fill="currentColor"/>
+            <path d="M0 2h20v16H0zm5 6v4h5v4h8V4h-8v4z" fill="currentColor"/>
+          </svg>
+        </label>
+        <label title="Внизу">
+          <input v-model="$store.state.teaser.textBottom" :value="false" type="radio">
+          <svg height="1em" viewBox="0 0 20 20" width="1em" xmlns="http://www.w3.org/2000/svg">
+            <path d="m10 16l-4-5h3V6h2v5h3z" fill="currentColor"/>
+            <path d="M2 0v20h16V0zm2 10h4V5h4v5h4v8H4z" fill="currentColor"/>
+          </svg>
+        </label>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,17 +69,17 @@ export default {
 }
 </script>
 <style scoped>
-.enigmas__enigma.enigma__zoom .enigma__picture img {
-  transform: scale(0);
-  transition: transform 0.5s;
-}
-
-.enigmas__enigma.enigma__zoom:hover .enigma__picture img {
-  transform: scale(1.2);
-}
 .settings-text {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 2fr 1fr;
   align-items: center;
+}
+
+.buttons {
+  grid-template-columns: repeat(2, 50px);
+
+  label {
+    margin: 0;
+  }
 }
 </style>

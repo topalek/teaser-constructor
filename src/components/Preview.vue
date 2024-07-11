@@ -5,7 +5,7 @@
       <a v-for="n in teaserCount" :key="n" :class="{'enigma__zoom': state.teaser.zoom}" :style="teaserStyle" class="enigmas__enigma" href="{url}">
         <div :style="imageStyle" class="enigma__picture">
           <img
-              :src="`https://picsum.photos/id/${n}/500/500`"
+              :src="`https://loremflickr.com/500/500?lock=${n}`"
           />
         </div>
         <div :style="contentStyle" class="enigma__footer">
@@ -136,7 +136,10 @@ export default {
         ...this.state.btn,
         borderRadius: `${this.state.btn.borderRadius}px`,
         marginTop: `${this.state.btn.marginTop}px!important`,
-        fontWeight: this.state.btn.bold ? 'bold' : 'normal',
+        marginBottom: `${this.state.btn.marginBottom}px!important`,
+        fontWeight: this.state.btn.bold ? 700 : 400,
+        textDecoration: this.state.btn.underline ? `underline` : 'none',
+        fontStyle: this.state.btn.italic ? "italic!important" : "normal!important",
       }
     },
     listStyle() {
@@ -181,8 +184,8 @@ export default {
     },
     imageStyle() {
       return {
-        width: `${this.state.image.width}!important`,
-        height: `${this.state.image.height}!important`,
+        width: this.state.image.cover ? `100%!important` : `${this.state.image.width}!important`,
+        height: this.state.image.cover ? `100%!important` : `${this.state.image.height}!important`,
         borderTopLeftRadius: `${this.state.image.borderTopLeftRadius}px!important`,
         borderBottomLeftRadius: `${this.state.image.borderBottomLeftRadius}px!important`,
         borderTopRightRadius: `${this.state.image.borderTopRightRadius}px!important`,

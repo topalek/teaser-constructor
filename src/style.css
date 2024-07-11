@@ -1,83 +1,87 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
 }
+
 a:hover {
-  color: #535bf2;
+    color: #535bf2;
 }
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    font-size: 3.2em;
+    line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+    border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
 .card {
-  padding: 2em;
+    padding: 2em;
 }
 
-#app{
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-gap: 20px;
-  height: 100%;
+#app {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 20px;
+    height: 100%;
 }
+
 h1 {
-  grid-column: 1/-1;
-  text-align: center;
+    grid-column: 1/-1;
+    text-align: center;
 }
 
 .settings {
-  padding-left: 20px;
-  grid-column: 1/2;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    padding-left: 20px;
+    grid-column: 1/2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .settings-input {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-gap: 10px;
-  align-items: center;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 10px;
+    align-items: center;
 
     .form-control {
         height: 26px;
@@ -94,26 +98,64 @@ h1 {
         }
     }
 }
+
 .preview {
-  grid-column: 2/-1;
+    grid-column: 2/-1;
     background-color: #747bff;
-  overflow: auto;
+    overflow: auto;
     /*background: url("./assets/checkerboard.jpg");*/
     /*background-size: 5%;*/
-  padding: 40px;
+    padding: 40px;
     position: sticky;
     top: 0;
 }
 
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    label, button {
+        user-select: none;
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border: 1px solid #e6e6e6;
+        background-color: #e6e6e6;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+        text-align: center;
+        padding: 0;
+
+        &:hover {
+            background-color: #cccccc;
+        }
+    }
+
+    input {
+        display: none;
+    }
+
+    label:has(:checked), .txt-btn.active {
+        background-color: #FFFD58;
+        border-color: #9f9e1c;
+    }
+}
+
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+
+    a:hover {
+        color: #747bff;
+    }
+
+    button {
+        background-color: #f9f9f9;
+    }
 }
