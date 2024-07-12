@@ -65,9 +65,10 @@ const store = createStore({
                 underline: false,
             },
             teaser: {
-                textBottom: true,
+                text: 'right',
                 width: 300,
                 height: 200,
+                gap: 5,
                 borderRadius: 0,
                 paddingInline: 0,
                 paddingBlock: 0,
@@ -141,7 +142,6 @@ const store = createStore({
         },
         updateBorderWidth({commit, state}, width) {
             commit('setBorderWidth', width);
-            console.log(+state.block.br, +state.block.bl)
             const teaserWidth = Math.round((state.block.width - state.block.paddingInline * 2 - state.block.gap * (state.block.countH - 1) - (+state.block.br * state.block.borderWidth) - (+state.block.bl * state.block.borderWidth)) / state.block.countH);
             const teaserHeight = Math.round((state.block.height - state.block.paddingBlock * 2 - state.block.gap * (state.block.countV - 1) - (+state.block.bt * state.block.borderWidth) - (+state.block.bb * state.block.borderWidth)) / state.block.countV);
             commit('setTeaserWidth', teaserWidth);

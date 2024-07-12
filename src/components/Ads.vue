@@ -5,6 +5,7 @@
     <SettingsInput v-model="teaser.borderRadius" max="100" min="0" type="number">Скругление, px</SettingsInput>
     <SettingsInput v-model="teaser.paddingInline" max="100" min="0" type="number">Отступы по-горизонтали, px</SettingsInput>
     <SettingsInput v-model="teaser.paddingBlock" max="100" min="0" type="number">Отступы по-вертикали, px</SettingsInput>
+    <SettingsInput v-model="teaser.gap" max="50" min="0" type="number">Расстояние между тизером и текстом, px</SettingsInput>
     <Toggle v-model="teaser.showBorder">Обводка</Toggle>
     <Toggle v-model="teaser.zoom">Увеличение при наведении</Toggle>
     <ColorPicker v-model="teaser.backgroundColor">Цвет фона</ColorPicker>
@@ -13,18 +14,25 @@
     <div class="settings-text">
       <label>Расположение текста</label>
       <div class="buttons">
-        <label title="Справа">
-          <input v-model="$store.state.teaser.textBottom" :value="true" type="radio">
+        <label title="Внизу">
+          <input v-model="$store.state.teaser.text" type="radio" value="left">
           <svg height="1em" viewBox="0 0 20 20" width="1em" xmlns="http://www.w3.org/2000/svg">
-            <path d="m16 10l-5-4v3H6v2h5v3z" fill="currentColor"/>
-            <path d="M0 2h20v16H0zm5 6v4h5v4h8V4h-8v4z" fill="currentColor"/>
+            <path d="m4 10l5-4v3h5v2H9v3z" fill="currentColor"/>
+            <path d="M0 2v16h20V2zm2 2h8v4h5v4h-5v4H2z" fill="currentColor"/>
           </svg>
         </label>
         <label title="Внизу">
-          <input v-model="$store.state.teaser.textBottom" :value="false" type="radio">
+          <input v-model="$store.state.teaser.text" type="radio" value="bottom">
           <svg height="1em" viewBox="0 0 20 20" width="1em" xmlns="http://www.w3.org/2000/svg">
             <path d="m10 16l-4-5h3V6h2v5h3z" fill="currentColor"/>
             <path d="M2 0v20h16V0zm2 10h4V5h4v5h4v8H4z" fill="currentColor"/>
+          </svg>
+        </label>
+        <label title="Справа">
+          <input v-model="$store.state.teaser.text" type="radio" value="right">
+          <svg height="1em" viewBox="0 0 20 20" width="1em" xmlns="http://www.w3.org/2000/svg">
+            <path d="m16 10l-5-4v3H6v2h5v3z" fill="currentColor"/>
+            <path d="M0 2h20v16H0zm5 6v4h5v4h8V4h-8v4z" fill="currentColor"/>
           </svg>
         </label>
       </div>
@@ -76,7 +84,7 @@ export default {
 }
 
 .buttons {
-  grid-template-columns: repeat(2, 50px);
+  grid-template-columns: repeat(3, 50px);
 
   label {
     margin: 0;

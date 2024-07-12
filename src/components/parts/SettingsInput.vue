@@ -28,42 +28,39 @@ export default {
     }
   },
   emits: ['update:modelValue'],
-  watch: {
-    modelValue(newValue) {
-      if (this.type === 'number') {
-        let value = Number(newValue);
-        // if (isNaN(value)) {
-        //   value = this.min;
-        // }
-        // else if (value < this.min) {
-        //   value = this.min;
-        // } else
-        if (value > this.max) {
-          value = this.max;
-        }
-        this.$emit('update:modelValue', value.toString() || 0);
-      }
-    }
-  },
   methods: {
-    validateValue(event) {
-      let value = event.target.value;
-      // if (this.type === 'number' && value !== '') {
-      //   value = Number(value);
-      //   if (isNaN(value)) {
-      //     value = this.min;
-      //   } else if (value < this.min) {
-      //     value = this.min;
-      //   } else if (value > this.max) {
-      //     value = this.max;
-      //   }
-      // }
-      this.$emit('update:modelValue', value.toString());
-    },
     onKeydown(event) {
       const invalidKeys = ['+', '-'];
       if (this.type === 'number' && invalidKeys.includes(event.key)) {
         event.preventDefault();
+      }
+    }
+  },
+  computed: {
+    val: {
+      get() {
+        return this.modelValue
+      },
+      set(newValue) {
+        if (this.type === 'number') {
+          let value = Number(newValue);
+
+          if (newValue === '' && this.empty) {
+            console.log(newValue, this.empty)
+            this.$emit('update:modelValue', newValue);
+            return true
+          }
+          // if (isNaN(value)) {
+          //   value = this.min;
+          // }
+          // else if (value < this.min) {
+          //   value = this.min;
+          // } else
+          if (value > this.max) {
+            value = this.max;
+          }
+          this.$emit('update:modelValue', value.toString() || 0);
+        }
       }
     }
   }
@@ -75,7 +72,7 @@ export default {
     <span>
       <slot/>
     </span>
-    <input :max="max" :min="min" :name="name" :step="step" :type="type" :value="modelValue" class="form-control" @input="validateValue" @keydown="onKeydown"/>
+    <input v-model="val" :max="max" :min="min" :name="name" :step="step" :type="type" class="form-control" @keydown="onKeydown"/>
   </label>
 </template>
 

@@ -65,8 +65,8 @@
       <ColorInput v-model="btn.color">Цвет текста кнопки</ColorInput>
       <ColorInput v-model="btn.backgroundColor">Цвет фона кнопки</ColorInput>
       <SettingsInput v-model="btn.borderRadius" max="100" min="0" type="number">Скругление кнопки, px</SettingsInput>
-      <SettingsInput v-model="btn.marginTop" max="100" min="0" type="number">Отступ сверху, px</SettingsInput>
-      <SettingsInput v-model="btn.marginBottom" max="100" min="0" type="number">Отступ снизу, px</SettingsInput>
+      <SettingsInput v-model="marginTop" :empty="true" max="100" min="0" type="number">Отступ сверху, px</SettingsInput>
+      <SettingsInput v-model="marginBottom" :empty="true" max="100" min="0" type="number">Отступ снизу, px</SettingsInput>
       <div class="font-settings">
         <div class="style">
           <label>Стиль шрифта</label>
@@ -142,7 +142,7 @@ export default {
         {value: "right", text: 'Справа'},
       ],
       btnText: ["Узнать больше", "Узнать подробнее", "Подробнее", "Еще", "Читать далее"],
-    };
+    }
   },
   computed: {
     ...mapState({
@@ -150,6 +150,30 @@ export default {
       text: state => state.text,
       btn: state => state.btn,
     }),
+    marginTop: {
+      get() {
+        return this.btn.marginTop
+      },
+      set(value) {
+        if (value.trim() === '') {
+          this.btn.marginTop = null
+          return
+        }
+        this.btn.marginTop = +value
+      }
+    },
+    marginBottom: {
+      get() {
+        return this.btn.marginBottom
+      },
+      set(value) {
+        if (value.trim() === '') {
+          this.btn.marginBottom = null
+          return
+        }
+        this.btn.marginBottom = +value
+      }
+    },
   },
   methods: {
     ...mapActions(['updateTeaserWidth', 'updateTeaserHeight']),

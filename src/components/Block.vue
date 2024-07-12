@@ -31,8 +31,8 @@
                 fill="currentColor"/>
           </svg>
         </label>
-        <label class="">
-          <input v-model="border" type="checkbox"/>
+        <label class="" title="Все">
+          <input v-model="allBorder" type="checkbox"/>
           <svg height="1em" viewBox="0 0 24 24" width="1em" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M20 3H4c-.6 0-1 .4-1 1v16c0 .6.4 1 1 1h16c.6 0 1-.4 1-1V4c0-.6-.4-1-1-1m-1 16H5V5h14zm-7-6c.6 0 1-.4 1-1s-.4-1-1-1s-1 .4-1 1s.4 1 1 1m0 4c.6 0 1-.4 1-1s-.4-1-1-1s-1 .4-1 1s.4 1 1 1m0-8c.6 0 1-.4 1-1s-.4-1-1-1s-1 .4-1 1s.4 1 1 1m-4 4c.6 0 1-.4 1-1s-.4-1-1-1s-1 .4-1 1s.4 1 1 1m8 0c.6 0 1-.4 1-1s-.4-1-1-1s-1 .4-1 1s.4 1 1 1"
@@ -58,7 +58,12 @@
       </div>
       <div v-if="isBorder" class="border-detail">
         <SettingsInput v-model="borderWidth" max="20" min="1" type="number">Ширина границы, px</SettingsInput>
-        <Select v-model="block.borderStyle" :options="[{value:'solid',text: 'Сплошная'},{value:'dashed',text: 'Пунктир'},{value:'dotted',text: 'Точками'}]">Стиль границы</Select>
+        <Select v-model="block.borderStyle" :options="[
+            {value:'solid',text: 'Сплошная'},
+            {value:'dashed',text: 'Пунктир'},
+            {value:'dotted',text: 'Точками'},
+            {value:'double',text: 'Двойная'},
+            ]">Стиль границы</Select>
         <ColorPicker v-model="block.borderColor">Цвет границы</ColorPicker>
       </div>
     </div>
@@ -105,8 +110,6 @@
     border: 1px solid #b7b530;
   }
 }
-
-
 </style>
 <script>
 import SettingsInput from "./parts/SettingsInput.vue";
@@ -121,7 +124,6 @@ export default {
     return {
       type: 1,
       types: [{value: 1, text: 'Тип блока 1'}],
-      border: false,
     }
   },
   computed: {
@@ -137,9 +139,6 @@ export default {
       },
       set(value) {
         this.block.br = value
-        if (!value) {
-          this.border = false
-        }
         this.updateBorderWidth(this.borderWidth);
       }
     },
@@ -149,9 +148,6 @@ export default {
       },
       set(value) {
         this.block.bt = value
-        if (!value) {
-          this.border = false
-        }
         this.updateBorderWidth(this.borderWidth);
       }
     },
@@ -161,9 +157,6 @@ export default {
       },
       set(value) {
         this.block.bl = value
-        if (!value) {
-          this.border = false
-        }
         this.updateBorderWidth(this.borderWidth);
       }
     },
@@ -173,9 +166,6 @@ export default {
       },
       set(value) {
         this.block.bb = value
-        if (!value) {
-          this.border = false
-        }
         this.updateBorderWidth(this.borderWidth);
       }
     },
@@ -187,9 +177,9 @@ export default {
         this.updateBorderWidth(value);
       }
     },
-    border: {
+    allBorder: {
       get() {
-        return this.border
+        return this.block.br && this.block.bt && this.block.bl && this.block.bb
       },
       set(value) {
         this.block.br = this.block.bt = this.block.bl = this.block.bb = value

@@ -135,8 +135,8 @@ export default {
         paddingInline: '1rem!important',
         ...this.state.btn,
         borderRadius: `${this.state.btn.borderRadius}px`,
-        marginTop: `${this.state.btn.marginTop}px!important`,
-        marginBottom: `${this.state.btn.marginBottom}px!important`,
+        marginTop: this.state.btn.marginTop !== null ? `${this.state.btn.marginTop}px!important` : 'auto!important',
+        marginBottom: this.state.btn.marginBottom !== null ? `${this.state.btn.marginBottom}px!important` : 'auto!important',
         fontWeight: this.state.btn.bold ? 700 : 400,
         textDecoration: this.state.btn.underline ? `underline` : 'none',
         fontStyle: this.state.btn.italic ? "italic!important" : "normal!important",
@@ -163,15 +163,27 @@ export default {
       }
     },
     teaserStyle() {
+      let grid = {
+        gridTemplateColumns: `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr`,
+        gridTemplateRows: '1fr',
+      }
+      if (this.state.teaser.text === 'bottom') {
+        grid.gridTemplateColumns = '1fr'
+        grid.gridTemplateRows = `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr`
+      }
+      if (this.state.teaser.text === 'left') {
+        grid.gridTemplateColumns = `${this.state.teaser.textFr}fr ${this.state.teaser.imgFr}fr`
+        grid.gridTemplateRows = '1fr'
+      }
       return {
         display: 'grid!important',
         paddingBlock: `${this.state.teaser.paddingBlock}px!important`,
         paddingInline: `${this.state.teaser.paddingInline}px!important`,
-        gridTemplateColumns: this.state.teaser.textBottom ? `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr` : '1fr',
-        gridTemplateRows: this.state.teaser.textBottom ? '1fr' : `${this.state.teaser.imgFr}fr ${this.state.teaser.textFr}fr`,
+        gridTemplateColumns: grid.gridTemplateColumns,
+        gridTemplateRows: grid.gridTemplateRows,
+        gap: `${this.state.teaser.gap}px!important`,
         width: `${this.state.teaser.width}px!important`,
         height: `${this.state.teaser.height}px!important`,
-        flexDirection: this.state.teaser.textBottom ? 'column!important' : 'row!important',
         borderRadius: `${this.state.teaser.borderRadius}px`,
         border: this.state.teaser.showBorder ? '1px solid #D9D9D9 !important' : 'none',
         backgroundColor: `${this.state.teaser.backgroundColor}!important`,
@@ -183,6 +195,28 @@ export default {
       };
     },
     imageStyle() {
+      let grid = {
+        col: '1/2',
+        row: '1/2',
+        coverCol: '1/3',
+        coverRow: '1/2',
+      };
+      if (this.state.teaser.text === 'bottom') {
+        grid.col = '1/2'
+        grid.row = '1/2'
+        grid.coverCol = '1/2'
+        grid.coverRow = '1/3'
+      }
+      if (this.state.teaser.text === 'left') {
+        grid.col = '2/3'
+        grid.row = '1/2'
+        grid.coverCol = '1/3'
+        grid.coverRow = '1/2'
+      }
+      if (this.state.image.cover) {
+        grid.col = grid.coverCol
+        grid.row = grid.coverRow
+      }
       return {
         width: this.state.image.cover ? `100%!important` : `${this.state.image.width}!important`,
         height: this.state.image.cover ? `100%!important` : `${this.state.image.height}!important`,
@@ -192,24 +226,32 @@ export default {
         borderBottomRightRadius: `${this.state.image.borderBottomRightRadius}px!important`,
         justifySelf: `${this.state.image.justifySelf}!important`,
         alignSelf: `${this.state.image.alignSelf}!important`,
-        ...(this.state.image.cover && {
-          gridColumn: this.state.teaser.textBottom ? '1/3' : '1/3',
-          gridRow: this.state.teaser.textBottom ? '1/3' : '1/3',
-        })
+        gridColumn: grid.col,
+        gridRow: grid.row,
       };
     },
     contentStyle() {
+      let grid = {
+        col: '2/3',
+        row: '1/2',
+      };
+      if (this.state.teaser.text === 'bottom') {
+        grid.col = '1/2'
+        grid.row = '2/3'
+      }
+      if (this.state.teaser.text === 'left') {
+        grid.col = '1/2'
+        grid.row = '1/2'
+      }
       return {
         paddingInline: `${this.state.text.paddingInline}px!important`,
         paddingBlock: `${this.state.text.paddingBlock}px!important`,
         display: 'grid!important',
         maxWidth: `100%!important`,
         maxHeight: `100%!important`,
-        ...(this.state.image.cover && {
-          gridColumn: this.state.teaser.textBottom ? '2/3' : '1/3',
-          gridRow: this.state.teaser.textBottom ? '1/3' : '2/3',
-          position: 'relative',
-        })
+        gridColumn: grid.col,
+        gridRow: grid.row,
+        position: 'relative',
       }
     },
     textStyle() {
