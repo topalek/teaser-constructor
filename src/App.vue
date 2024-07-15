@@ -16,8 +16,15 @@
     <Image v-show="active === 'image'"/>
     <Content v-show="active === 'content'"/>
   </div>
-    <div class="preview">
+  <div :class="{'resize': $store.state.block.responsive}" class="preview">
+    <div ref="banana" class="banana-xR96Z2uysHrhtfA8">
       <Preview v-if="showPreview" :state="$store.state"/>
+    </div>
+    <div v-if="$store.state.block.responsive" class="dimensions">
+      <h3>Размеры блока содержащего тизерный блок</h3>
+      <p>Ширина: {{ width }}px</p>
+      <p>Высота: {{ height }}px</p>
+    </div>
     </div>
 </template>
 
@@ -40,15 +47,62 @@ export default {
     return {
       active: 'block',
       showPreview: false,
+      width: 0,
+      height: 0
     };
+  },
+  watch: {
+    '$store.state.block.responsive'(value) {
+      if (!value) {
+        document.querySelector('.preview').removeAttribute('style');
+      }
+    }
+  },
+  methods: {
+    createResizeObserver() {
+      this.resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+          this.width = entry.contentRect.width
+          this.$store.state.block.isMobile = this.width <= this.$store.state.block.breakpoint
+          this.height = entry.contentRect.height
+        }
+      });
+      this.resizeObserver.observe(this.$refs.banana);
+    },
+    destroyResizeObserver() {
+      if (this.resizeObserver) {
+        this.resizeObserver.unobserve(this.$refs.banana);
+        this.resizeObserver.disconnect();
+      }
+    }
   },
   mounted() {
     this.showPreview = true
-  }
+    this.createResizeObserver();
+  },
+  beforeDestroy() {
+    this.destroyResizeObserver();
+  },
 };
 </script>
 
 <style scoped>
+.dimensions {
+  display: grid;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  p {
+    margin: 0;
+  }
+}
+
+.resize {
+  resize: horizontal;
+  max-width: 100%;
+  overflow: hidden;
+}
 .btn-group input[type="radio"] {
   display: none;
 }

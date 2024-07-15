@@ -23,6 +23,8 @@ const store = createStore({
                 borderColor: "#000000ff",
                 backgroundColor: "#ffffff00",
                 responsive: false,
+                breakpoint: 400,
+                isMobile: false,
             },
             text: {
                 bold: false,

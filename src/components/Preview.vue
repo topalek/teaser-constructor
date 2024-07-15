@@ -1,7 +1,7 @@
 <template>
   <h3 v-if="state.block.name">{{ state.block.name }}</h3>
   <div :class="cssClass" :style="blockStyle" class="enigmas">
-    <div ref="list" :style='listStyle' class="enigmas__list">
+    <div ref="list" :style='state.block.isMobile ? listStyleMobile : listStyle' class="enigmas__list">
       <a v-for="n in teaserCount" :key="n" :class="{'enigma__zoom': state.teaser.zoom}" :style="teaserStyle" class="enigmas__enigma" href="{url}">
         <div :style="imageStyle" class="enigma__picture">
           <img
@@ -71,7 +71,12 @@ export default {
       formData.append('SiteBlockTemplate[name]', this.state.block.name || name + '-block')
       formData.append('SiteBlockTemplate[user_id]', user)
       formData.append('SiteBlockTemplate[is_common]', 0)
-      formData.append('SiteBlockTemplate[css]', this.convertToCss(this.blockStyle, `${this.cssSelector}`) + this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`))
+      let blockStyle = this.convertToCss(this.blockStyle, `${this.cssSelector}`)
+      blockStyle += this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`)
+      if (this.state.block.responsive) {
+        blockStyle += `@container banana (max-width: ${this.state.block.breakpoint}px){${this.convertToCss(this.listStyleMobile, `${this.cssSelector} .enigma__list`)}} `
+      }
+      formData.append('SiteBlockTemplate[css]', blockStyle)
       formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`)
       toBlob(document.querySelector('.enigmas'), {skipFonts: true, preferredFontFormat: 'woff2'}).then(blob => {
         formData.append('CommonTemplate[imageFile]', blob, `${name}.png`)
@@ -144,7 +149,7 @@ export default {
     },
     listStyle() {
       return {
-        ...(this.state.block.responsive ? {display: "flex!important", flexWrap: 'wrap'} : {display: "grid!important"}),
+        display: "grid!important",
         gridTemplateColumns: `repeat(${this.state.block.countH}, 1fr)!important`,
         gap: `${this.state.block.gap}px!important`,
         backgroundColor: `${this.state.block.backgroundColor} !important`,
@@ -152,14 +157,29 @@ export default {
         paddingInline: `${this.state.block.paddingInline}px!important`,
       }
     },
+    listStyleMobile() {
+      return {
+        display: "grid!important",
+        gap: `${this.state.block.gap}px!important`,
+        backgroundColor: `${this.state.block.backgroundColor} !important`,
+        paddingBlock: `${this.state.block.paddingBlock}px!important`,
+        paddingInline: `${this.state.block.paddingInline}px!important`,
+      }
+    },
     blockStyle() {
+      let adaptive = {
+        maxWidth: `${this.state.block.width}px!important`,
+        width: "100%!important",
+        height: 'auto!important',
+      }
+      let normal = {width: `${this.state.block.width}px!important`, height: `${this.state.block.height}px!important`}
       return {
         borderBottom: this.state.block.bb ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
         borderTop: this.state.block.bt ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
         borderLeft: this.state.block.bl ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
         borderRight: this.state.block.br ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
         borderRadius: `${this.state.block.borderRadius}px!important`,
-        ...(this.state.block.responsive ? {width: "100%", display: "flex!important", flexWrap: "wrap!important", height: 'auto!important'} : {width: `${this.state.block.width}px!important`, height: `${this.state.block.height}px!important`})
+        ...(this.state.block.responsive ? adaptive : normal)
       }
     },
     teaserStyle() {
@@ -175,6 +195,12 @@ export default {
         grid.gridTemplateColumns = `${this.state.teaser.textFr}fr ${this.state.teaser.imgFr}fr`
         grid.gridTemplateRows = '1fr'
       }
+      let adaptive = {
+        maxWidth: `${this.state.teaser.width}px!important`,
+        width: "100%!important",
+        height: `${this.state.teaser.height}px!important`,
+      }
+      let normal = {width: `${this.state.teaser.width}px!important`, height: `${this.state.teaser.height}px!important`}
       return {
         display: 'grid!important',
         paddingBlock: `${this.state.teaser.paddingBlock}px!important`,
@@ -182,8 +208,7 @@ export default {
         gridTemplateColumns: grid.gridTemplateColumns,
         gridTemplateRows: grid.gridTemplateRows,
         gap: `${this.state.teaser.gap}px!important`,
-        width: `${this.state.teaser.width}px!important`,
-        height: `${this.state.teaser.height}px!important`,
+        ...(this.state.block.responsive ? adaptive : normal),
         borderRadius: `${this.state.teaser.borderRadius}px`,
         border: this.state.teaser.showBorder ? '1px solid #D9D9D9 !important' : 'none',
         backgroundColor: `${this.state.teaser.backgroundColor}!important`,

@@ -1,6 +1,6 @@
 <template>
   <div class="block-settings">
-    <SettingsInput v-model="$store.state.block.name" name="">Название блока:</SettingsInput>
+    <SettingsInput v-model="block.name" name="">Название блока:</SettingsInput>
     <Select v-model="type" :options="types">Тип блока</Select>
     <Select v-model="countH" :options="[1,2,3,4,5,6,7,8,9,10]">Кол-во тизеров по-горизонтали:</Select>
     <Select v-model="countV" :options="[1,2,3,4,5,6,7,8,9,10]">Кол-во тизеров по-вертикали:</Select>
@@ -9,9 +9,14 @@
     <SettingsInput v-model="paddingInline" max="100" min="0" type="number">Отступ по горизонтали, px</SettingsInput>
     <SettingsInput v-model="paddingBlock" max="100" min="0" type="number">Отступ по вертикали, px</SettingsInput>
     <SettingsInput v-model="gap" max="20" min="0" type="number">Расстояние между тизерами, px</SettingsInput>
-    <SettingsInput v-model="$store.state.block.borderRadius" max="100" min="0" type="number">Скругление, px</SettingsInput>
-    <ColorPicker v-model="$store.state.block.backgroundColor">Цвет фона</ColorPicker>
-    <Toggle v-model="$store.state.block.responsive">Адаптивный</Toggle>
+    <SettingsInput v-model="block.borderRadius" max="100" min="0" type="number">Скругление, px</SettingsInput>
+    <ColorPicker v-model="block.backgroundColor">Цвет фона</ColorPicker>
+    <div class="adaptive">
+      <Toggle v-model="block.responsive">Адаптивный</Toggle>
+      <div v-if="block.responsive" class="adaptive-settings">
+        <SettingsInput v-model="block.breakpoint" max="1000" min="20" type="number">Ширина блока для перестройки тизеров, px</SettingsInput>
+      </div>
+    </div>
     <div class="border-settings">
       <label>Границы</label>
       <div class="buttons">
