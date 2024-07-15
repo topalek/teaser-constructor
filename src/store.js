@@ -35,10 +35,12 @@ const store = createStore({
                 lineHeight: 14,
                 textSize: 14,
                 color: "#000000",
+                colorHover: "#FFFD58",
                 paddingInline: 0,
                 paddingBlock: 0,
                 textAlign: 'left',
                 shadow: false,
+                hover: true,
             },
             image: {
                 width: '100%',

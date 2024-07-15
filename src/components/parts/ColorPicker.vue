@@ -61,16 +61,16 @@ export default {
 </script>
 
 <template>
-  <label class="settings-input">
-    <span>
+  <div class="settings-input">
+    <label>
       <slot/>
-    </span>
+    </label>
     <div ref="wrapper" :style="{'background-color': modelValue}" class="color-wrapper">
       <input v-model="color" type="color" @input="updateColor">
       <input v-model="opacity" max="1" min="0" step="0.01" type="range" @input="updateOpacity"/>
     </div>
 
-  </label>
+  </div>
 </template>
 
 <style scoped>

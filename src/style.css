@@ -82,7 +82,19 @@ h1 {
     grid-template-columns: 2fr 1fr;
     grid-gap: 10px;
     align-items: center;
+    transition: 0.2s all;
 
+    &:has(:hover) {
+        background-color: #f1f1f1;
+    }
+
+    &:hover {
+        background-color: #f1f1f1;
+    }
+
+    label {
+        margin: 0;
+    }
     .form-control {
         height: 26px;
         padding: 0 1rem;
@@ -99,6 +111,10 @@ h1 {
     }
 }
 
+.block-settings, .teaser-settings, .image-settings, .block-content {
+    display: grid;
+    gap: 10px;
+}
 .preview {
     grid-column: 2/-1;
     background-color: #747bff;

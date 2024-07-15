@@ -14,7 +14,7 @@
     <div class="settings-text">
       <label>Расположение текста</label>
       <div class="buttons">
-        <label title="Внизу">
+        <label title="Слева">
           <input v-model="$store.state.teaser.text" type="radio" value="left">
           <svg height="1em" viewBox="0 0 20 20" width="1em" xmlns="http://www.w3.org/2000/svg">
             <path d="m4 10l5-4v3h5v2H9v3z" fill="currentColor"/>

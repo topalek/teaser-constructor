@@ -20,17 +20,17 @@ export default {
 </script>
 
 <template>
-  <label class="settings-input">
-    <span>
+  <div class="settings-input">
+    <label>
       <slot/>
-    </span>
+    </label>
     <input :checked="modelValue"
            :name="name"
            class="toggle"
            type="checkbox"
            @change="emitChange"
     />
-  </label>
+  </div>
 </template>
 
 <style scoped>

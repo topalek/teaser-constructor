@@ -44,23 +44,19 @@ export default {
       set(newValue) {
         if (this.type === 'number') {
           let value = Number(newValue);
-
           if (newValue === '' && this.empty) {
-            console.log(newValue, this.empty)
             this.$emit('update:modelValue', newValue);
-            return true
+            this.$refs.input.value = newValue
+            return newValue
           }
-          // if (isNaN(value)) {
-          //   value = this.min;
-          // }
-          // else if (value < this.min) {
-          //   value = this.min;
-          // } else
-          if (value > this.max) {
-            value = this.max;
+          if (value > +this.max) {
+            value = +this.max
           }
-          this.$emit('update:modelValue', value.toString() || 0);
+          this.$emit('update:modelValue', value || 0);
+          this.$refs.input.value = value
+          return value
         }
+        this.$emit('update:modelValue', newValue);
       }
     }
   }
@@ -68,12 +64,12 @@ export default {
 </script>
 
 <template>
-  <label class="settings-input">
-    <span>
+  <div class="settings-input">
+    <label>
       <slot/>
-    </span>
-    <input v-model="val" :max="max" :min="min" :name="name" :step="step" :type="type" class="form-control" @keydown="onKeydown"/>
-  </label>
+    </label>
+    <input ref="input" v-model="val" :max="max" :min="min" :name="name" :step="step" :type="type" class="form-control" @keydown="onKeydown"/>
+  </div>
 </template>
 
 <style scoped>

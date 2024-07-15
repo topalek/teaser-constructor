@@ -2,17 +2,17 @@
   <h3 v-if="state.block.name">{{ state.block.name }}</h3>
   <div :class="cssClass" :style="blockStyle" class="enigmas">
     <div ref="list" :style='state.block.isMobile ? listStyleMobile : listStyle' class="enigmas__list">
-      <a v-for="n in teaserCount" :key="n" :class="{'enigma__zoom': state.teaser.zoom}" :style="teaserStyle" class="enigmas__enigma" href="{url}">
+      <a v-for="n in teaserCount" :key="n" :class="{'enigma__zoom': state.teaser.zoom, 'enigma__hover': state.text.hover}" :style="teaserStyle" class="enigmas__enigma" href="{url}">
         <div :style="imageStyle" class="enigma__picture">
           <img
               :src="`https://loremflickr.com/500/500?lock=${n}`"
           />
         </div>
         <div :style="contentStyle" class="enigma__footer">
-          <p :style="textStyle" class="enigma__text">
+          <p :style="textStyle" class="enigma__text" @mouseleave="hover = false" @mouseover="hover = true">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem molestiae cum minus.
           </p>
-          <div v-if="state.teaser.showBtn" :style="btnStyle" class="enigma__btn">
+          <div v-if="state.teaser.showBtn" :style="btnStyle" class="enigma__btn" @mouseleave="btnHover = false" @mouseover="btnHover = true">
             {{ state.btn.text }}
           </div>
         </div>
@@ -30,6 +30,12 @@ import {toBlob} from 'html-to-image';
 export default {
   props: {
     state: Object,
+  },
+  data() {
+    return {
+      hover: false,
+      btnHover: false,
+    }
   },
   methods: {
     convertToCss(styleObj, selector) {
@@ -130,21 +136,20 @@ export default {
     teaserCount() {
       return this.state.block.countV * this.state.block.countH;
     },
-    btnStyle() {
+    blockStyle() {
+      let adaptive = {
+        maxWidth: `${this.state.block.width}px!important`,
+        width: "100%!important",
+        height: 'auto!important',
+      }
+      let normal = {width: `${this.state.block.width}px!important`, height: `${this.state.block.height}px!important`}
       return {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '40px',
-        justifySelf: this.state.btn.justifySelf,
-        paddingInline: '1rem!important',
-        ...this.state.btn,
-        borderRadius: `${this.state.btn.borderRadius}px`,
-        marginTop: this.state.btn.marginTop !== null ? `${this.state.btn.marginTop}px!important` : 'auto!important',
-        marginBottom: this.state.btn.marginBottom !== null ? `${this.state.btn.marginBottom}px!important` : 'auto!important',
-        fontWeight: this.state.btn.bold ? 700 : 400,
-        textDecoration: this.state.btn.underline ? `underline` : 'none',
-        fontStyle: this.state.btn.italic ? "italic!important" : "normal!important",
+        borderBottom: this.state.block.bb ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderTop: this.state.block.bt ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderLeft: this.state.block.bl ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderRight: this.state.block.br ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
+        borderRadius: `${this.state.block.borderRadius}px!important`,
+        ...(this.state.block.responsive ? adaptive : normal)
       }
     },
     listStyle() {
@@ -164,22 +169,6 @@ export default {
         backgroundColor: `${this.state.block.backgroundColor} !important`,
         paddingBlock: `${this.state.block.paddingBlock}px!important`,
         paddingInline: `${this.state.block.paddingInline}px!important`,
-      }
-    },
-    blockStyle() {
-      let adaptive = {
-        maxWidth: `${this.state.block.width}px!important`,
-        width: "100%!important",
-        height: 'auto!important',
-      }
-      let normal = {width: `${this.state.block.width}px!important`, height: `${this.state.block.height}px!important`}
-      return {
-        borderBottom: this.state.block.bb ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
-        borderTop: this.state.block.bt ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
-        borderLeft: this.state.block.bl ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
-        borderRight: this.state.block.br ? `${this.state.block.borderWidth}px ${this.state.block.borderStyle} ${this.state.block.borderColor}` : 'none',
-        borderRadius: `${this.state.block.borderRadius}px!important`,
-        ...(this.state.block.responsive ? adaptive : normal)
       }
     },
     teaserStyle() {
@@ -203,6 +192,7 @@ export default {
       let normal = {width: `${this.state.teaser.width}px!important`, height: `${this.state.teaser.height}px!important`}
       return {
         display: 'grid!important',
+        ...(this.state.text.hover && {filter: "none"}),
         paddingBlock: `${this.state.teaser.paddingBlock}px!important`,
         paddingInline: `${this.state.teaser.paddingInline}px!important`,
         gridTemplateColumns: grid.gridTemplateColumns,
@@ -213,10 +203,6 @@ export default {
         border: this.state.teaser.showBorder ? '1px solid #D9D9D9 !important' : 'none',
         backgroundColor: `${this.state.teaser.backgroundColor}!important`,
         overflow: "hidden",
-        ...(this.state.teaser.zoomOnHover && {
-          transition: "transform 0.3s",
-          ":hover": {transform: "scale(1.05)"},
-        }),
       };
     },
     imageStyle() {
@@ -281,10 +267,11 @@ export default {
     },
     textStyle() {
       return {
+        ...(this.state.text.hover && {"--clr-hover-txt": this.state.text.colorHover}),
         fontFamily: this.state.text.fontFamily + '!important',
         lineHeight: `${this.state.text.lineHeight}px!important`,
         fontSize: `${this.state.text.fontSize}px!important`,
-        color: this.state.text.color + '!important',
+        color: this.hover && this.state.text.hover ? this.state.text.colorHover + '!important' : this.state.text.color + '!important',
         textAlign: this.state.text.textAlign + '!important',
         fontWeight: this.state.text.bold ? 700 : 400,
         textDecoration: this.state.text.underline ? `underline` : 'none',
@@ -293,15 +280,24 @@ export default {
         transition: "color 0.3s",
       };
     },
-    iconStyle() {
+    btnStyle() {
       return {
-        fontSize: `${this.state.teaser.iconSize}px`,
-        color: this.state.teaser.iconColor,
-        transition: "color 0.3s",
-        ...(this.state.teaser.hoverIconColor && {
-          ":hover": {color: this.state.teaser.hoverIconColor},
-        }),
-      };
+        ...this.state.btn,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '40px',
+        justifySelf: this.state.btn.justifySelf,
+        paddingInline: '1rem!important',
+        backgroundColor: this.btnHover && this.state.text.hover ? this.state.btn.backgroundHoverColor : this.state.btn.backgroundColor,
+        borderRadius: `${this.state.btn.borderRadius}px`,
+        marginTop: this.state.btn.marginTop !== null ? `${this.state.btn.marginTop}px!important` : 'auto!important',
+        marginBottom: this.state.btn.marginBottom !== null ? `${this.state.btn.marginBottom}px!important` : 'auto!important',
+        fontWeight: this.state.btn.bold ? 700 : 400,
+        textDecoration: this.state.btn.underline ? `underline` : 'none',
+        fontStyle: this.state.btn.italic ? "italic!important" : "normal!important",
+        ...(this.state.text.hover && {"--clr-hover-btn": this.state.btn.backgroundHoverColor}),
+      }
     },
   },
 };

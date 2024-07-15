@@ -1,6 +1,6 @@
 <template>
   <div class="block-settings">
-    <SettingsInput v-model="block.name" name="">Название блока:</SettingsInput>
+    <SettingsInput v-model="block.name">Название блока:</SettingsInput>
     <Select v-model="type" :options="types">Тип блока</Select>
     <Select v-model="countH" :options="[1,2,3,4,5,6,7,8,9,10]">Кол-во тизеров по-горизонтали:</Select>
     <Select v-model="countV" :options="[1,2,3,4,5,6,7,8,9,10]">Кол-во тизеров по-вертикали:</Select>

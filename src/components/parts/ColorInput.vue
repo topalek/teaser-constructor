@@ -7,10 +7,10 @@ export default {
 </script>
 
 <template>
-  <label class="settings-input">
-    <span>
+  <div class="settings-input">
+    <label>
       <slot/>
-    </span>
+    </label>
     <input :value="modelValue" class="color" type="color" @change="$emit('update:modelValue', $event.target.value)"/>
-  </label>
+  </div>
 </template>
