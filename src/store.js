@@ -34,7 +34,7 @@ const store = createStore({
                 paddingInline: 0,
                 paddingBlock: 0,
                 showBorder: false,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#ffffffff',
                 showBtn: true,
                 zoom: true,
                 shadow: true,

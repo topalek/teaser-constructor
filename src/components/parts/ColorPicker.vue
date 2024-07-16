@@ -36,7 +36,7 @@ export default {
         this.color = `#${value.slice(1, 7)}`;
         this.opacity = a;
       } else {
-        console.error('Invalid color format');
+        console.error('Invalid color format:', value);
       }
     },
     updateColor(event) {

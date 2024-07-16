@@ -65,7 +65,7 @@ export default {
 
 <template>
   <div class="settings-input">
-    <label>
+    <label :class="{'special':empty}">
       <slot/>
     </label>
     <input ref="input" v-model="val" :max="max" :min="min" :name="name" :step="step" :type="type" class="form-control" @keydown="onKeydown"/>
@@ -73,5 +73,9 @@ export default {
 </template>
 
 <style scoped>
-
+label.special::after {
+  content: "*";
+  margin-left: 5px;
+  color: red;
+}
 </style>

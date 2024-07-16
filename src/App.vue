@@ -15,6 +15,11 @@
     <Ads v-show="active === 'teaser'"/>
     <Image v-show="active === 'image'"/>
     <Content v-show="active === 'content'"/>
+    <div class="wiki">
+      <h3>Справка</h3>
+      <p>Поля со звездочкой "<span><sub>*</sub></span>" можно оставить пустыми, тогда для значение такого поля примет <strong>"auto"</strong>.</p>
+      <p>При выборе опции "Адаптивный" для блока, у фиолетового блока появится возможность изменять ширину с помощью мыши в правом нижнем углу</p>
+    </div>
   </div>
   <div ref="banana" :class="{'resize': $store.state.block.responsive}" class="preview">
       <Preview v-if="showPreview" :state="$store.state"/>
@@ -62,7 +67,7 @@ export default {
         for (let entry of entries) {
           this.width = entry.contentRect.width
           this.$store.state.block.isMobile = this.width <= this.$store.state.block.breakpoint
-          this.height = entry.contentRect.height
+          this.height = entry.contentRect.height.toFixed()
         }
       });
       this.resizeObserver.observe(this.$refs.banana);
@@ -96,6 +101,16 @@ export default {
   }
 }
 
+.wiki {
+  margin-top: 10px;
+  padding: 1rem;
+  background-color: #f6f6f6;
+
+  span {
+    font-size: 2rem;
+    color: red;
+  }
+}
 .resize {
   resize: horizontal;
   max-width: 100%;

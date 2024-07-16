@@ -20,7 +20,6 @@
     </div>
   </div>
   <footer class="footer">
-
     <a :href="backUrl" class="btn btn-black">Назад</a>
     <button class="btn btn-accent" @click="getPayload">Сохранить</button>
   </footer>
@@ -49,6 +48,10 @@ export default {
       return `${selector} { ${styles} }`;
     },
     async getPayload(e) {
+      if (!this.state.block.name.toString().trim()) {
+        notify('Необходимо заполнить "Название блока"', 'danger')
+        return false
+      }
       e.target.disabled = true
       let {csrfToken, user, url, returnUrl, site} = document.getElementById('app').dataset;
       let formData = new FormData()

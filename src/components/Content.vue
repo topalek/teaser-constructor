@@ -161,7 +161,7 @@ export default {
         return this.btn.marginTop
       },
       set(value) {
-        if (value.trim() === '') {
+        if (value.toString().trim() === '') {
           this.btn.marginTop = null
           return
         }
@@ -173,7 +173,7 @@ export default {
         return this.btn.marginBottom
       },
       set(value) {
-        if (value.trim() === '') {
+        if (value.toString().trim() === '') {
           this.btn.marginBottom = null
           return
         }
