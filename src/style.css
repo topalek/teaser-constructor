@@ -111,7 +111,7 @@ h1 {
     }
 }
 
-.block-settings, .teaser-settings, .image-settings, .block-content {
+.block-settings, .teaser-settings, .image-settings, .block-content, .adaptive, .border-detail {
     display: grid;
     gap: 10px;
 }
@@ -119,11 +119,7 @@ h1 {
     grid-column: 2/-1;
     background-color: #747bff;
     overflow: auto;
-    /*background: url("./assets/checkerboard.jpg");*/
-    /*background-size: 5%;*/
     padding: 40px;
-    position: sticky;
-    top: 0;
 }
 
 .buttons {
@@ -161,10 +157,25 @@ h1 {
     }
 }
 
-.banana-xR96Z2uysHrhtfA8 {
-    container-name: banana;
-    container-type: inline-size;
+.footer {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    padding: 1rem;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    gap: 72px;
+    height: 80px;
+    z-index: 10;
+    background: rgba(24, 24, 24, 0.24);
+    backdrop-filter: blur(6px);
+
+    .btn {
+        width: 200px;
+    }
 }
+
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;

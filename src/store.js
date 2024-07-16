@@ -91,7 +91,9 @@ const store = createStore({
     },
     mutations: {
         setState(state, payload) {
+            let name = state.block.name
             state.block = payload.block;
+            state.block.name = name
             state.text = payload.text;
             state.image = payload.image;
             state.btn = payload.btn;

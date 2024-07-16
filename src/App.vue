@@ -16,10 +16,8 @@
     <Image v-show="active === 'image'"/>
     <Content v-show="active === 'content'"/>
   </div>
-  <div :class="{'resize': $store.state.block.responsive}" class="preview">
-    <div ref="banana" class="banana-xR96Z2uysHrhtfA8">
+  <div ref="banana" :class="{'resize': $store.state.block.responsive}" class="preview">
       <Preview v-if="showPreview" :state="$store.state"/>
-    </div>
     <div v-if="$store.state.block.responsive" class="dimensions">
       <h3>Размеры блока содержащего тизерный блок</h3>
       <p>Ширина: {{ width }}px</p>
@@ -103,6 +101,7 @@ export default {
   max-width: 100%;
   overflow: hidden;
 }
+
 .btn-group input[type="radio"] {
   display: none;
 }

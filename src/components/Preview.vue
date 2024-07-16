@@ -19,9 +19,11 @@
       </a>
     </div>
   </div>
-  <div class="mt-4 d-flex justify-content-end">
+  <footer class="footer">
+
+    <a :href="backUrl" class="btn btn-black">Назад</a>
     <button class="btn btn-accent" @click="getPayload">Сохранить</button>
-  </div>
+  </footer>
 </template>
 
 <script>
@@ -35,6 +37,7 @@ export default {
     return {
       hover: false,
       btnHover: false,
+      backUrl: '#'
     }
   },
   methods: {
@@ -304,6 +307,10 @@ export default {
       }
     },
   },
+  mounted() {
+    let {backUrl} = document.getElementById('app').dataset;
+    this.backUrl = backUrl
+  }
 };
 </script>
 
