@@ -203,6 +203,7 @@ export default {
         border: this.state.teaser.showBorder ? '1px solid #D9D9D9 !important' : 'none',
         backgroundColor: `${this.state.teaser.backgroundColor}!important`,
         overflow: "hidden",
+        boxShadow: this.state.teaser.shadow ? "0 0 5px rgba(0,0,0,.5)" : "none",
       };
     },
     imageStyle() {
@@ -286,9 +287,10 @@ export default {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '40px',
+        padding: '.5rem 0.25rem!important',
+        height: `${this.state.btn.height}px`,
+        width: this.state.btn.width ? `${this.state.btn.width}px` : 'auto',
         justifySelf: this.state.btn.justifySelf,
-        paddingInline: '1rem!important',
         backgroundColor: this.btnHover && this.state.text.hover ? this.state.btn.backgroundHoverColor : this.state.btn.backgroundColor,
         borderRadius: `${this.state.btn.borderRadius}px`,
         marginTop: this.state.btn.marginTop !== null ? `${this.state.btn.marginTop}px!important` : 'auto!important',
@@ -296,6 +298,8 @@ export default {
         fontWeight: this.state.btn.bold ? 700 : 400,
         textDecoration: this.state.btn.underline ? `underline` : 'none',
         fontStyle: this.state.btn.italic ? "italic!important" : "normal!important",
+        fontFamily: this.state.text.fontFamily + '!important',
+        fontSize: `${this.state.btn.fontSize}px!important`,
         ...(this.state.text.hover && {"--clr-hover-btn": this.state.btn.backgroundHoverColor}),
       }
     },

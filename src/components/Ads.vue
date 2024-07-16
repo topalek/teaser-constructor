@@ -7,6 +7,7 @@
     <SettingsInput v-model="teaser.paddingBlock" max="100" min="0" type="number">Отступы по-вертикали, px</SettingsInput>
     <SettingsInput v-model="teaser.gap" max="50" min="0" type="number">Расстояние между тизером и текстом, px</SettingsInput>
     <Toggle v-model="teaser.showBorder">Обводка</Toggle>
+    <Toggle v-model="teaser.shadow">Тень</Toggle>
     <Toggle v-model="teaser.zoom">Увеличение при наведении</Toggle>
     <ColorPicker v-model="teaser.backgroundColor">Цвет фона</ColorPicker>
     <Select v-model="teaser.imgFr" :options="[1,2,3,4,5,6,7,8,9,10]">Колонок картинки</Select>

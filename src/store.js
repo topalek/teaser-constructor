@@ -5,14 +5,13 @@ const store = createStore({
         return {
             block: {
                 name: "",
-                width: 300,
-                height: 200,
-                type: 1,
+                width: 627,
+                height: 270,
                 countV: 1,
-                countH: 1,
-                paddingInline: 0,
-                paddingBlock: 0,
-                gap: 0,
+                countH: 3,
+                paddingInline: 5,
+                paddingBlock: 5,
+                gap: 7,
                 bb: false,
                 bt: false,
                 br: false,
@@ -21,22 +20,38 @@ const store = createStore({
                 borderWidth: 1,
                 borderRadius: 0,
                 borderColor: "#000000ff",
-                backgroundColor: "#ffffff00",
+                backgroundColor: "#ffffff80",
                 responsive: false,
                 breakpoint: 400,
                 isMobile: false,
             },
+            teaser: {
+                text: 'bottom',
+                width: 200,
+                height: 260,
+                gap: 5,
+                borderRadius: 10,
+                paddingInline: 0,
+                paddingBlock: 0,
+                showBorder: false,
+                backgroundColor: '#ffffff',
+                showBtn: true,
+                zoom: true,
+                shadow: true,
+                imgFr: 3,
+                textFr: 2,
+            },
             text: {
-                bold: false,
+                bold: true,
                 italic: false,
                 underline: false,
-                fontSize: 14,
-                fontFamily: '"Arial", sans-serif',
+                fontSize: 16,
+                fontFamily: '"Roboto Slab", serif',
                 lineHeight: 14,
                 textSize: 14,
                 color: "#000000",
                 colorHover: "#FFFD58",
-                paddingInline: 0,
+                paddingInline: 5,
                 paddingBlock: 0,
                 textAlign: 'left',
                 shadow: false,
@@ -55,34 +70,23 @@ const store = createStore({
                 borderBottomRightRadius: 0,
             },
             btn: {
-                text: 'Узнать больше',
+                text: 'Еще',
                 textAlign: 'left',
-                color: "#ffffff",
-                backgroundColor: "#165da8",
+                color: "#000000",
+                backgroundColor: "#d1d1d1",
                 backgroundHoverColor: "#FFFD58",
-                borderRadius: 0,
+                borderRadius: 5,
                 marginTop: 0,
                 marginBottom: 0,
-                justifySelf: 'auto',
-                bold: false,
+                width: 66,
+                height: 28,
+                fontSize: 14,
+                justifySelf: 'end',
+                bold: true,
                 italic: false,
                 underline: false,
             },
-            teaser: {
-                text: 'right',
-                width: 300,
-                height: 200,
-                gap: 5,
-                borderRadius: 0,
-                paddingInline: 0,
-                paddingBlock: 0,
-                showBorder: false,
-                backgroundColor: '#ffffff',
-                showBtn: false,
-                zoom: false,
-                imgFr: 1,
-                textFr: 1,
-            }
+
         }
     },
     mutations: {
@@ -143,6 +147,9 @@ const store = createStore({
                     console.error('Error parsing JSON from data-settings:', error);
                 }
             }
+        },
+        updateState({commit}, payload) {
+            commit('setState', payload);
         },
         updateBorderWidth({commit, state}, width) {
             commit('setBorderWidth', width);
@@ -215,10 +222,14 @@ function convertStringsToNumbers(data) {
     if (data.block) {
         data.block.width = Number(data.block.width);
         data.block.height = Number(data.block.height);
-        data.block.countV = Number(data.block.countV);
-        data.block.countH = Number(data.block.countH);
-        data.block.padding = Number(data.block.padding);
+        data.block.countVV = Number(data.block.countV);
+        data.block.countHH = Number(data.block.countH);
+        data.block.paddingInline = Number(data.block.paddingInline);
+        data.block.paddingBlock = Number(data.block.paddingBlock);
         data.block.gap = Number(data.block.gap);
+        data.block.borderWidth = Number(data.block.borderWidth);
+        data.block.borderRadius = Number(data.block.borderRadius);
+        data.block.breakpoint = Number(data.block.breakpoint);
     }
     if (data.text) {
         data.text.fontSize = Number(data.text.fontSize);
@@ -236,11 +247,19 @@ function convertStringsToNumbers(data) {
     if (data.btn) {
         data.btn.borderRadius = Number(data.btn.borderRadius);
         data.btn.marginTop = Number(data.btn.marginTop);
+        data.btn.marginBottom = Number(data.btn.marginBottom);
+        data.btn.fontSize = Number(data.btn.fontSize);
     }
     if (data.teaser) {
         data.teaser.width = Number(data.teaser.width);
         data.teaser.height = Number(data.teaser.height);
         data.teaser.borderRadius = Number(data.teaser.borderRadius);
+        data.teaser.gap = Number(data.teaser.gap);
+        data.teaser.borderRadius = Number(data.teaser.borderRadius);
+        data.teaser.paddingInline = Number(data.teaser.paddingInline);
+        data.teaser.paddingBlock = Number(data.teaser.paddingBlock);
+        data.teaser.imgFr = Number(data.teaser.imgFr);
+        data.teaser.textFr = Number(data.teaser.textFr);
     }
 }
 

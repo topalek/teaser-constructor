@@ -62,11 +62,14 @@
     <Toggle v-model="text.hover">Свой цвет текста при наведении</Toggle>
     <ColorInput v-if="text.colorHover" v-model="text.colorHover" name="text.colorHover">Цвет текста при наведении</ColorInput>
     <Toggle v-model="teaser.showBtn">Показать кнопку</Toggle>
-    <template v-if="teaser.showBtn">
+    <div v-if="teaser.showBtn" class="btn-settings">
       <Select v-model="btn.text" :options="btnText">Текст кнопки</Select>
       <ColorInput v-model="btn.color">Цвет текста кнопки</ColorInput>
       <ColorInput v-model="btn.backgroundColor">Цвет фона кнопки</ColorInput>
       <ColorInput v-if="text.hover" v-model="btn.backgroundHoverColor">Цвет фона кнопки при наведении</ColorInput>
+      <SettingsInput v-model="btn.fontSize" max="25" min="8" type="number">Размер шрифта кнопки, px</SettingsInput>
+      <SettingsInput v-model="btn.width" max="250" min="50" type="number">Ширина кнопки, px</SettingsInput>
+      <SettingsInput v-model="btn.height" max="50" min="0" type="number">Высота кнопки, px</SettingsInput>
       <SettingsInput v-model="btn.borderRadius" max="100" min="0" type="number">Скругление кнопки, px</SettingsInput>
       <SettingsInput v-model="marginTop" :empty="true" max="100" min="0" type="number">Отступ сверху, px</SettingsInput>
       <SettingsInput v-model="marginBottom" :empty="true" max="100" min="0" type="number">Отступ снизу, px</SettingsInput>
@@ -101,7 +104,7 @@
         </div>
       </div>
 
-    </template>
+    </div>
   </div>
 </template>
 
@@ -197,6 +200,13 @@ export default {
   grid-template-columns: repeat(3, 50px);
 }
 
+.btn-settings {
+  display: grid;
+  gap: 10px;
+  padding: 1rem;
+  border: 1px solid #242424;
+  border-radius: 10px;
+}
 .font-settings {
   display: flex;
   justify-content: space-between;
