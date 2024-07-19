@@ -86,7 +86,7 @@ export default {
       blockStyle += this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`)
       blockStyle += this.teaserCssRules
       if (this.state.block.responsive) {
-        blockStyle += `@container banana (max-width: ${this.state.block.breakpoint}px){${this.convertToCss(this.listStyleMobile, `${this.cssSelector} .enigma__list`)}} `
+        blockStyle += `@${this.state.block.adaptiveBy} (max-width: ${this.state.block.breakpoint}px){${this.convertToCss(this.listStyleMobile, `${this.cssSelector} .enigma__list`)}} `
       }
       formData.append('SiteBlockTemplate[css]', blockStyle)
       formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`)

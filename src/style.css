@@ -111,7 +111,7 @@ h1 {
     }
 }
 
-.block-settings, .teaser-settings, .image-settings, .block-content, .adaptive, .border-detail {
+.block-settings, .teaser-settings, .image-settings, .block-content, .adaptive, .adaptive-settings, .border-detail {
     display: grid;
     gap: 10px;
 }

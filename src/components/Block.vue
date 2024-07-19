@@ -15,6 +15,7 @@
       <Toggle v-model="block.responsive">Адаптивный</Toggle>
       <div v-if="block.responsive" class="adaptive-settings">
         <SettingsInput v-model="block.breakpoint" max="1000" min="20" type="number">Ширина блока для перестройки тизеров, px</SettingsInput>
+        <Select v-model="block.adaptiveBy" :options="[{value:'media',text: 'Устройство'},{value:'container',text: 'Контейнер'}]">Адаптив в зависимости от:</Select>
       </div>
     </div>
     <div class="border-settings">

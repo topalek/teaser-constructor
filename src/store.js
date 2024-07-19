@@ -22,6 +22,7 @@ const store = createStore({
                 borderColor: "#000000ff",
                 backgroundColor: "#ffffff80",
                 responsive: false,
+                adaptiveBy: "media",
                 breakpoint: 400,
                 isMobile: false,
             },
