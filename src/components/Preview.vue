@@ -57,7 +57,7 @@ export default {
       let formData = new FormData()
       let name = this.cssClass
       formData.append('_csrf', csrfToken)
-      formData.append('CommonTemplate[name]', this.state.block.name || name + '-template')
+      formData.append('CommonTemplate[name]', (this.state.block.name || name) + '-template')
       formData.append('CommonTemplate[max_teaser]', this.teaserCount)
       formData.append('CommonTemplate[max_column]', this.state.block.countH)
       formData.append('CommonTemplate[max_row]', this.state.block.countV)
@@ -69,10 +69,9 @@ export default {
       formData.append('SiteBlock[site_id]', site)
       formData.append('SiteBlock[name]', this.state.block.name || name)
 
-      formData.append('TeaserTemplate[name]', this.state.block.name || name + '-teaser')
+      formData.append('TeaserTemplate[name]', 'constructor ' + (this.state.teaser.showBtn ? `btn ${this.state.btn.text}` : 'no btn'))
       formData.append('TeaserTemplate[user_id]', user)
       formData.append('TeaserTemplate[is_common]', 0)
-      formData.append('TeaserTemplate[css]', this.teaserCssRules)
       formData.append('TeaserTemplate[html]', `<a class="enigmas__enigma" href="{url}"  target="_blank" {data}>
         <div class="enigma__picture"><img src="{imgUrl}"/></div>
         <div class="enigma__footer">
@@ -80,11 +79,12 @@ export default {
         </div>
       </a>`)
 
-      formData.append('SiteBlockTemplate[name]', this.state.block.name || name + '-block')
+      formData.append('SiteBlockTemplate[name]', (this.state.block.name || name) + '-block')
       formData.append('SiteBlockTemplate[user_id]', user)
       formData.append('SiteBlockTemplate[is_common]', 0)
       let blockStyle = this.convertToCss(this.blockStyle, `${this.cssSelector}`)
       blockStyle += this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`)
+      blockStyle += this.teaserCssRules
       if (this.state.block.responsive) {
         blockStyle += `@container banana (max-width: ${this.state.block.breakpoint}px){${this.convertToCss(this.listStyleMobile, `${this.cssSelector} .enigma__list`)}} `
       }
@@ -191,7 +191,7 @@ export default {
         grid.gridTemplateRows = '1fr'
       }
       let adaptive = {
-        maxWidth: `${this.state.teaser.width}px!important`,
+        // maxWidth: `${this.state.teaser.width}px!important`,
         width: "100%!important",
         height: `${this.state.teaser.height}px!important`,
       }

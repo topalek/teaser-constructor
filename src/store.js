@@ -136,15 +136,18 @@ const store = createStore({
         },
     },
     actions: {
-        initializeStore({commit}) {
+        initializeStore({commit, state}) {
             const rootElement = document.getElementById('app');
-            const settings = rootElement ? rootElement.getAttribute('data-settings') : null;
+            let settings = rootElement ? rootElement.getAttribute('data-settings') : null;
 
             if (settings) {
                 try {
-                    const data = JSON.parse(settings.replaceAll("'", '"'));
+                    settings = settings.replace(/'/g, '"');
+                    const data = JSON.parse(settings);
+                    let name = data.block.name.toString()
                     convertStringsToNumbers(data)
                     commit('setState', data);
+                    state.block.name = name
                 } catch (error) {
                     console.error('Error parsing JSON from data-settings:', error);
                 }
@@ -187,16 +190,16 @@ const store = createStore({
         updateTeaserWidth({commit, state}, width) {
             const newBlockWidth = state.block.countH * width + state.block.paddingInline * 2 + state.block.gap * (state.block.countH - 1) + (+state.block.br * state.block.borderWidth) + (+state.block.bl * state.block.borderWidth);
             commit('setTeaserWidth', width);
-            if (newBlockWidth > state.block.width) {
-                commit('setBlockWidth', newBlockWidth);
-            }
+            commit('setBlockWidth', newBlockWidth);
+            // if (newBlockWidth > state.block.width) {
+            // }
         },
         updateTeaserHeight({commit, state}, height) {
             const blockHeight = state.block.countV * height + state.block.paddingBlock * 2 + state.block.gap * (state.block.countV - 1) + (+state.block.bt * state.block.borderWidth) + (+state.block.bb * state.block.borderWidth);
             commit('setTeaserHeight', height);
-            if (blockHeight > state.block.height) {
-                commit('setBlockHeight', blockHeight);
-            }
+            commit('setBlockHeight', blockHeight);
+            // if (blockHeight > state.block.height) {
+            // }
         },
         updateBlockHeight({commit, state}, height) {
             const newTeaserHeight = Math.round((height - state.block.paddingBlock * 2 - state.block.gap * (state.block.countV - 1) - (+state.block.bt * state.block.borderWidth) - (+state.block.bb * state.block.borderWidth)) / state.block.countV);
@@ -206,16 +209,16 @@ const store = createStore({
         updateCountH({commit, state}, count) {
             commit('setCountH', count);
             const newBlockWidth = count * state.teaser.width + state.block.paddingInline * 2 + state.block.gap * (count - 1) + (+state.block.br * state.block.borderWidth) + (+state.block.bl * state.block.borderWidth);
-            if (newBlockWidth > state.block.width) {
-                commit('setBlockWidth', newBlockWidth);
-            }
+            commit('setBlockWidth', newBlockWidth);
+            // if (newBlockWidth > state.block.width) {
+            // }
         },
         updateCountV({commit, state}, count) {
             commit('setCountV', count);
             const newBlockHeight = count * state.teaser.height + state.block.paddingBlock * 2 + state.block.gap * (count - 1) + (+state.block.bt * state.block.borderWidth) + (+state.block.bb * state.block.borderWidth);
-            if (newBlockHeight > state.block.height) {
-                commit('setBlockHeight', newBlockHeight);
-            }
+            commit('setBlockHeight', newBlockHeight);
+            // if (newBlockHeight > state.block.height) {
+            // }
         }
     },
 })
@@ -224,8 +227,8 @@ function convertStringsToNumbers(data) {
     if (data.block) {
         data.block.width = Number(data.block.width);
         data.block.height = Number(data.block.height);
-        data.block.countVV = Number(data.block.countV);
-        data.block.countHH = Number(data.block.countH);
+        data.block.countV = Number(data.block.countV);
+        data.block.countH = Number(data.block.countH);
         data.block.paddingInline = Number(data.block.paddingInline);
         data.block.paddingBlock = Number(data.block.paddingBlock);
         data.block.gap = Number(data.block.gap);
