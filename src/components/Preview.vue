@@ -69,10 +69,10 @@ export default {
       formData.append('SiteBlock[site_id]', site)
       formData.append('SiteBlock[name]', this.state.block.name || name)
 
-      formData.append('TeaserTemplate[name]', 'constructor ' + (this.state.teaser.showBtn ? `btn ${this.state.btn.text}` : 'no btn'))
+      formData.append('TeaserTemplate[name]', this.getTeaserName())
       formData.append('TeaserTemplate[user_id]', user)
       formData.append('TeaserTemplate[is_common]', 0)
-      formData.append('TeaserTemplate[html]', `<a class="enigmas__enigma" href="{url}"  target="_blank" {data}>
+      formData.append('TeaserTemplate[html]', `<a class="${this.getTeaserClass()}" href="{url}"  target="_blank" {data}>
         <div class="enigma__picture"><img src="{imgUrl}"/></div>
         <div class="enigma__footer">
           <p class="enigma__text">{text}</p>${this.state.teaser.showBtn ? '<div class="enigma__btn">' + this.state.btn.text + '</div>' : ''}
@@ -118,6 +118,31 @@ export default {
           e.target.disabled = false
         })
       })
+    },
+    getTeaserName() {
+      let name = ['constructor']
+      if (this.state.teaser.showBtn) {
+        name.push(`btn ${this.state.btn.text}`)
+      } else {
+        name.push('no btn')
+      }
+      if (this.state.teaser.zoom) {
+        name.push('zoomOnHover')
+      }
+      if (this.state.text.hover) {
+        name.push('colorOnHover')
+      }
+      return name.join(' ')
+    },
+    getTeaserClass() {
+      let name = ['enigmas__enigma']
+      if (this.state.teaser.zoom) {
+        name.push('enigma__zoom')
+      }
+      if (this.state.text.hover) {
+        name.push('enigma__hover')
+      }
+      return name.join(' ')
     }
   },
   computed: {
@@ -289,13 +314,14 @@ export default {
     },
     btnStyle() {
       return {
-        ...this.state.btn,
+        textAlign: this.state.btn.textAlign,
+        color: this.state.btn.color,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         padding: '.5rem 0.25rem!important',
-        height: `${this.state.btn.height}px`,
         width: this.state.btn.width ? `${this.state.btn.width}px` : 'auto',
+        height: `${this.state.btn.height}px`,
         justifySelf: this.state.btn.justifySelf,
         backgroundColor: this.btnHover && this.state.text.hover ? this.state.btn.backgroundHoverColor : this.state.btn.backgroundColor,
         borderRadius: `${this.state.btn.borderRadius}px`,
