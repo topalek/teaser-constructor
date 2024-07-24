@@ -56,6 +56,7 @@ export default {
       let {csrfToken, user, url, returnUrl, site} = document.getElementById('app').dataset;
       let formData = new FormData()
       let name = this.cssClass
+      let listClass = "enigmas__list"
       formData.append('_csrf', csrfToken)
       formData.append('CommonTemplate[name]', (this.state.block.name || name) + '-template')
       formData.append('CommonTemplate[max_teaser]', this.teaserCount)
@@ -83,13 +84,13 @@ export default {
       formData.append('SiteBlockTemplate[user_id]', user)
       formData.append('SiteBlockTemplate[is_common]', 0)
       let blockStyle = this.convertToCss(this.blockStyle, `${this.cssSelector}`)
-      blockStyle += this.convertToCss(this.listStyle, `${this.cssSelector} .enigma__list`)
+      blockStyle += this.convertToCss(this.listStyle, `${this.cssSelector} .${listClass} `)
       blockStyle += this.teaserCssRules
       if (this.state.block.responsive) {
-        blockStyle += `@${this.state.block.adaptiveBy} (max-width: ${this.state.block.breakpoint}px){${this.convertToCss(this.listStyleMobile, `${this.cssSelector} .enigma__list`)}} `
+        blockStyle += `@${this.state.block.adaptiveBy} (max-width: ${this.state.block.breakpoint}px){${this.convertToCss(this.listStyleMobile, `${this.cssSelector} .${listClass}`)}} `
       }
       formData.append('SiteBlockTemplate[css]', blockStyle)
-      formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="enigmas__list">{teasers}</div></div>`)
+      formData.append('SiteBlockTemplate[html]', `<div id="{id}" class="enigmas ${this.cssClass}"><div class="${listClass}">{teasers}</div></div>`)
       toBlob(document.querySelector('.enigmas'), {skipFonts: true, preferredFontFormat: 'woff2'}).then(blob => {
         formData.append('CommonTemplate[imageFile]', blob, `${name}.png`)
         fetch(url,
@@ -148,12 +149,12 @@ export default {
   computed: {
     teaserCssRules() {
       const rules = [];
-      rules.push(this.convertToCss(this.teaserStyle, `${this.cssSelector} a.enigmas__enigma`));
-      rules.push(this.convertToCss(this.imageStyle, `${this.cssSelector} .enigma__picture`));
-      rules.push(this.convertToCss(this.contentStyle, `${this.cssSelector} .enigma__footer`));
-      rules.push(this.convertToCss(this.textStyle, `${this.cssSelector} .enigma__text`));
+      rules.push(this.convertToCss(this.teaserStyle, `${this.cssSelector} div.enigmas__list a.enigmas__enigma`));
+      rules.push(this.convertToCss(this.imageStyle, `${this.cssSelector} div.enigmas__list div.enigma__picture`));
+      rules.push(this.convertToCss(this.contentStyle, `${this.cssSelector} div.enigmas__list div.enigma__footer`));
+      rules.push(this.convertToCss(this.textStyle, `${this.cssSelector} div.enigmas__list div.enigma__footer p.enigma__text`));
       if (this.state.teaser.showBtn) {
-        rules.push(this.convertToCss(this.btnStyle, `${this.cssSelector} .enigma__btn`));
+        rules.push(this.convertToCss(this.btnStyle, `${this.cssSelector} div.enigmas__list div.enigma__footer div.enigma__btn`));
       }
 
       return rules.join('');

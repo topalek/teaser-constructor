@@ -147,6 +147,7 @@ const store = createStore({
                     const data = JSON.parse(settings);
                     let name = data.block.name.toString()
                     convertStringsToNumbers(data)
+                    data.block = {...state.block, ...data.block}
                     commit('setState', data);
                     state.block.name = name
                 } catch (error) {
